@@ -8,8 +8,13 @@ using UnityEngine;
 
 public class SortableItem : MonoBehaviour
 {
-    //fields
+    //private fields
     private List<string> attributes = new List<string>(); //List of all the attributes you can sort the item by
+    private Vector3 offset;
+    private Camera cam;
+    
+    //public fields
+    public Renderer rend;
 
     //properties
     public List<string> Attributes
@@ -19,11 +24,31 @@ public class SortableItem : MonoBehaviour
 
     void Start()
     {
-        
+        rend = GetComponent<Renderer>();
+        cam = Camera.main;
+    }
+
+    private void OnMouseDown()
+    {
+        //Calculate the offset between mouse position and offset position
+        offset = transform.position - GetMouseWorldPos();
+    }
+
+    void OnMouseDrag()
+    {
+        //Move object to follow mouse
+        transform.position = GetMouseWorldPos() + offset;
     }
 
     void Update()
     {
         
+    }
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousePoint = Input.mousePosition;
+        mousePoint.z = cam.WorldToScreenPoint(transform.position).z; //Maintain object's Z position
+        return cam.ScreenToWorldPoint(mousePoint);
     }
 }
