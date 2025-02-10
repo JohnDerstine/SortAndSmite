@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour
         //Spawn item
     }
 
-    private void TakeDamage(float dmg)
+    public void TakeDamage(float dmg)
     {
         health -= dmg;
 
