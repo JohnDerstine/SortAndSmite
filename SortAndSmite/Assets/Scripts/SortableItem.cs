@@ -8,13 +8,14 @@ using UnityEngine;
 
 public class SortableItem : MonoBehaviour
 {
+    //refernces
+    private PlayerController player;
+
     //private fields
+    [SerializeField]
     private List<string> attributes = new List<string>(); //List of all the attributes you can sort the item by
     private Vector3 offset;
     private Camera cam;
-    
-    //public fields
-    public Renderer rend;
 
     //properties
     public List<string> Attributes
@@ -24,14 +25,15 @@ public class SortableItem : MonoBehaviour
 
     void Start()
     {
-        rend = GetComponent<Renderer>();
         cam = Camera.main;
+        player = GameObject.Find("Controller").GetComponent<PlayerController>();
     }
 
     private void OnMouseDown()
     {
         //Calculate the offset between mouse position and offset position
         offset = transform.position - GetMouseWorldPos();
+        player.HeldItem = this;
     }
 
     void OnMouseDrag()
@@ -40,9 +42,14 @@ public class SortableItem : MonoBehaviour
         transform.position = GetMouseWorldPos() + offset;
     }
 
+    private void OnMouseUp()
+    {
+        player.HeldItem = null;
+    }
+
     void Update()
     {
-        
+
     }
 
     private Vector3 GetMouseWorldPos()

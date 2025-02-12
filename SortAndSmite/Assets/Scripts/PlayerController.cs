@@ -14,6 +14,17 @@ public class PlayerController : MonoBehaviour
     //fields
     private float health;
 
+    private SortableItem heldItem;
+
+    public SortableItem HeldItem
+    {
+        get { return heldItem; }
+        set
+        {
+            heldItem = value;
+        }
+    }
+
     void Start()
     {
         gameController = gameObject.GetComponent<GameController>();
