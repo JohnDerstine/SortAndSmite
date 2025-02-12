@@ -31,6 +31,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        CurrentState = GameState.Running;
+    }
+
     void Update()
     {
         //Might check for certain conditions to change state here

@@ -15,7 +15,7 @@ public class Boss : MonoBehaviour
     //fields
     private float spawnTimer = 3f;
     private float spawnBaseTime = 3f;
-    private float health;
+    private float health = 100;
 
     void Start()
     {

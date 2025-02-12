@@ -1,0 +1,6 @@
+.unity-progress-bar__container {
+    max-height: none;
+    height: 50px;
+    width: 500px;
+    rotate: 270deg;
+}

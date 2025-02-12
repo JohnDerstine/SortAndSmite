@@ -7,6 +7,7 @@ public class Box : MonoBehaviour
     //references
     private PlayerController player;
     private Boss boss;
+    private PatienceBar patience;
 
     //fields
     private Bounds bounds;
@@ -20,6 +21,7 @@ public class Box : MonoBehaviour
         //UNCOMMENT WHEN BOSS IS ADDED
         //boss = GameObject.Find("Boss").GetComponent<Boss>();
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
+        patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
         bounds = gameObject.GetComponent<Collider2D>().bounds;
         sRenderer = gameObject.GetComponent<SpriteRenderer>();
         attribute = placeHolderAttributes[Random.Range(0, placeHolderAttributes.Count)];
@@ -52,10 +54,12 @@ public class Box : MonoBehaviour
         if (bounds.Intersects(player.HeldItem.gameObject.GetComponent<Collider2D>().bounds))
         {
             if (player.HeldItem.Attributes.Contains(attribute))
+            {
                 itemsSorted++;
-                //restore patience
+                patience.AdjustPatience(5);
+            }
             else
-                itemsSorted--; //Might not want to take away, but just replace this with losing patience
+                patience.AdjustPatience(-10);
             Destroy(player.HeldItem.gameObject);
             player.HeldItem = null;
         }
