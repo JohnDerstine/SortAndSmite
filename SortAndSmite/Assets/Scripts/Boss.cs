@@ -18,8 +18,8 @@ public class Boss : MonoBehaviour
     private float spawnBaseTime = 3f;
     private float health;
     private float maxHealth = 100f;
-    private GameObject spawnItem;
-    private Transform spawnPoint;
+    public GameObject spawnItem;
+    public Transform spawnPoint;
 
     void Start()
     {
