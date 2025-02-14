@@ -13,13 +13,18 @@ public class Boss : MonoBehaviour
     GameController gameController;
     private Animator animator;
 
+    [SerializeField]
+    private List<GameObject> items = new List<GameObject>();
+
     //fields
-    private float spawnTimer = 3f;
-    private float spawnBaseTime = 3f;
+    private float spawnTimer = 0.25f;
+    private float spawnBaseTime = 0.25f;
     private float health = 100;
     private float maxHealth = 100f;
-    public GameObject spawnItem;
-    public Transform spawnPoint;
+    private GameObject spawnItem;
+    private Vector2 spawnPoint;
+    private const float spawnHeight = 7f;
+    private Vector2 screenBounds;
 
     void Start()
     {
@@ -30,6 +35,10 @@ public class Boss : MonoBehaviour
         //Initialization
         health = maxHealth;
         spawnTimer = spawnBaseTime;
+
+        //Get Screen Size
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        Debug.Log(screenBounds.x);
     }
 
     //Update spawn timer
@@ -56,11 +65,11 @@ public class Boss : MonoBehaviour
 
     private void SpawnItem()
     {
-        //Spawn item
-        if(spawnItem != null && spawnPoint != null)
-        {
-            Instantiate(spawnItem, spawnPoint.position, Quaternion.identity);
-        }
+        spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
+
+        //Randmize x value of item spawn, within a certain range based on screen size
+        spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 3f), screenBounds.x - (screenBounds.x / 3f)), spawnHeight);
+        Instantiate(spawnItem, spawnPoint, Quaternion.identity);
     }
 
     public void TakeDamage(float dmg)
