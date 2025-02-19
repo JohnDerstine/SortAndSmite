@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
     private float maxHealth = 100f;
     private GameObject spawnItem;
     private Vector2 spawnPoint;
-    private const float spawnHeight = 7f;
+    private const float spawnHeight = 5f;
     private Vector2 screenBounds;
 
     void Start()
@@ -68,7 +68,7 @@ public class Boss : MonoBehaviour
         spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
 
         //Randmize x value of item spawn, within a certain range based on screen size
-        spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 3f), screenBounds.x - (screenBounds.x / 3f)), spawnHeight);
+        spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 2f), screenBounds.x - (screenBounds.x / 2f)), spawnHeight);
         Instantiate(spawnItem, spawnPoint, Quaternion.identity);
     }
 

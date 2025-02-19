@@ -14,8 +14,11 @@ public class SortableItem : MonoBehaviour
     //private fields
     [SerializeField]
     private List<string> attributes = new List<string>(); //List of all the attributes you can sort the item by
-    private Vector3 offset;
     private Camera cam;
+    private Vector2 screenBounds;
+    private float objectWidth;
+    private float objectHeight;
+    private Rigidbody2D rb;
 
     //properties
     public List<string> Attributes
@@ -27,35 +30,46 @@ public class SortableItem : MonoBehaviour
     {
         cam = Camera.main;
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        rb = GetComponent<Rigidbody2D>();
+
+        // Get the object's size based on its collider
+        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+        {
+            objectWidth = sr.bounds.extents.x;
+            objectHeight = sr.bounds.extents.y;
+        }
     }
 
     private void OnMouseDown()
     {
-        //Calculate the offset between mouse position and offset position
-        offset = transform.position - GetMouseWorldPos();
         player.HeldItem = this;
+
+        // Disable gravity while dragging
+        if (rb != null)
+            rb.gravityScale = 0;
     }
 
     void OnMouseDrag()
     {
-        //Move object to follow mouse
-        transform.position = GetMouseWorldPos() + offset;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Clamp x position to prevent dragging outside edges
+        float clampedX = Mathf.Clamp(mousePosition.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
+
+        transform.position = new Vector3(clampedX, mousePosition.y, 0f);
     }
 
     private void OnMouseUp()
     {
         player.HeldItem = null;
+        // Restore gravity once released
+        if (rb != null)
+            rb.gravityScale = 1;
     }
 
     void Update()
     {
 
-    }
-
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = cam.WorldToScreenPoint(transform.position).z; //Maintain object's Z position
-        return cam.ScreenToWorldPoint(mousePoint);
     }
 }
