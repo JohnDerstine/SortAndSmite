@@ -19,6 +19,11 @@ public class SortableItem : MonoBehaviour
     private float objectWidth;
     private float objectHeight;
     private Rigidbody2D rb;
+    private float gravityMax = -5f;
+    private Vector2 lastMousePos = Vector2.zero;
+    private bool thrown;
+    private float thrownTimer = 1f;
+    private float baseThrownTimer = 1f;
 
     //properties
     public List<string> Attributes
@@ -52,7 +57,7 @@ public class SortableItem : MonoBehaviour
 
     void OnMouseDrag()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // Clamp x position to prevent dragging outside edges
         float clampedX = Mathf.Clamp(mousePosition.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
@@ -66,10 +71,28 @@ public class SortableItem : MonoBehaviour
         // Restore gravity once released
         if (rb != null)
             rb.gravityScale = 1;
+
+        //Add mouse velocity to item to keep realistic and satisfying momentum
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * -50f;
+        mouseVelocity = new Vector2(mouseVelocity.x, mouseVelocity.y * 2f);
+        rb.velocity += mouseVelocity;
+        thrown = true;
+        thrownTimer = baseThrownTimer;
     }
 
     void Update()
     {
+        //Timer for deactivting thrown boolean
+        //This is so that if the player throws downwards, it gains velocity still,
+        //but if the player throws it up it doesn't come down with uncapped velocity.
+        thrownTimer -= Time.deltaTime;
+        if (thrownTimer <= 0f && thrown)
+            thrown = false;
 
+        if (rb.velocity.y < gravityMax && !thrown)
+            rb.velocity = new Vector2(rb.velocity.x, gravityMax);
+
+        lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }
