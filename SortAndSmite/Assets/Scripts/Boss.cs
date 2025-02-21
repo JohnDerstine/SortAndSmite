@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// This could be a parent class if we decide that boss mosnters have different ways/patterns
@@ -12,19 +13,22 @@ public class Boss : MonoBehaviour
     //references
     GameController gameController;
     private Animator animator;
+    [SerializeField]
+    private UIDocument doc;
 
     [SerializeField]
     private List<GameObject> items = new List<GameObject>();
 
     //fields
-    private float spawnTimer = 0.25f;
-    private float spawnBaseTime = 0.25f;
+    private float spawnTimer = 1.5f;
+    private float spawnBaseTime = 1.5f;
     private float health = 100;
     private float maxHealth = 100f;
     private GameObject spawnItem;
     private Vector2 spawnPoint;
     private const float spawnHeight = 5f;
     private Vector2 screenBounds;
+    private ProgressBar healthBar;
 
     void Start()
     {
@@ -35,6 +39,7 @@ public class Boss : MonoBehaviour
         //Initialization
         health = maxHealth;
         spawnTimer = spawnBaseTime;
+        healthBar = doc.rootVisualElement.Q<VisualElement>("right").Q<ProgressBar>("Health");
 
         //Get Screen Size
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
@@ -75,6 +80,12 @@ public class Boss : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         health -= dmg;
+        healthBar.value = health;
+        if (healthBar.value < 0)
+            healthBar.value = 0;
+
+        //increase spawn rate
+        spawnBaseTime -= 0.07f;
 
         //Play Animation
         if (animator != null)

@@ -18,7 +18,7 @@ public class PatienceBar : MonoBehaviour
     void Start()
     {
         root = document.rootVisualElement;
-        bar = root.Q<ProgressBar>();
+        bar = root.Q<VisualElement>("left").Q<ProgressBar>("Patience");
     }
 
     // Reduce patience at a constant rate
@@ -27,7 +27,7 @@ public class PatienceBar : MonoBehaviour
         if (gameController.CurrentState != GameState.Running)
             return;
 
-        AdjustPatience(-1 * Time.deltaTime); //Multiply by difficulty/boss modifier??
+        AdjustPatience(-3 * Time.deltaTime); //Multiply by difficulty/boss modifier??
 
         if (bar.value <= 0)
             gameController.CurrentState = GameState.Defeat;
@@ -39,5 +39,7 @@ public class PatienceBar : MonoBehaviour
     public void AdjustPatience(float patience)
     {
         bar.value += patience;
+        if (bar.value > 100)
+            bar.value = 100;
     }
 }

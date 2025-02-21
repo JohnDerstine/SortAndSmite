@@ -22,6 +22,7 @@ public class Box : MonoBehaviour
         //boss = GameObject.Find("Boss").GetComponent<Boss>();
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
         patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
+        boss = GameObject.Find("Boss").GetComponent<Boss>();
         bounds = gameObject.GetComponent<Collider2D>().bounds;
         sRenderer = gameObject.GetComponent<SpriteRenderer>();
         attribute = placeHolderAttributes[Random.Range(0, placeHolderAttributes.Count)];
@@ -56,7 +57,8 @@ public class Box : MonoBehaviour
             if (player.HeldItem.Attributes.Contains(attribute))
             {
                 itemsSorted++;
-                patience.AdjustPatience(5);
+                patience.AdjustPatience(7.5f);
+                boss.TakeDamage(5); //temporary
             }
             else
                 patience.AdjustPatience(-10);
