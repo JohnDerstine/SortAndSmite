@@ -8,3 +8,12 @@ Menu UI
 
 Boss Animation
 
+UI Layout
+	- Patience bar = gradient from green to red
+	- Add clock symbol above patience bar, that shakes whenever patience is reduced.
+	- Move health bar above boss
+	- Settings button top right
+
+Juice
+	- Numbers that appear and move to patience bar when a box is sorted
+	- Boss glows red and shakes a little when a box is sorted
