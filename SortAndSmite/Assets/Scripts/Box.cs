@@ -45,25 +45,40 @@ public class Box : MonoBehaviour
         }
     }
 
-    
+    //Check the player held item, and recently thrown items for collisions
     void Update()
     {
-        if (player.HeldItem == null)
-            return;
+        List<SortableItem> items = new List<SortableItem>();
 
-        //if the item the player is dragging collides with this box, sort it/not, then destroy the object after.
-        if (bounds.Intersects(player.HeldItem.gameObject.GetComponent<Collider2D>().bounds))
+        if (player.HeldItem == null && player.recentItems.Count == 0)
+            return;
+        else if (player.recentItems.Count != 0)
         {
-            if (player.HeldItem.Attributes.Contains(attribute))
+            foreach (SortableItem item in player.recentItems)
+                items.Add(item);
+        }
+        else
+            items.Add(player.HeldItem);
+
+        foreach (SortableItem item in items)
+        {
+            //if the item the player is dragging collides with this box, sort it/not, then destroy the object after.
+            if (bounds.Intersects(item.gameObject.GetComponent<Collider2D>().bounds))
             {
-                itemsSorted++;
-                patience.AdjustPatience(7.5f);
-                boss.TakeDamage(5); //temporary
+                if (item.Attributes.Contains(attribute))
+                {
+                    itemsSorted++;
+                    patience.AdjustPatience(7.5f);
+                    boss.TakeDamage(5); //temporary
+                }
+                else
+                    patience.AdjustPatience(-10);
+                if (player.recentItems.Contains(item))
+                    player.recentItems.Remove(item);
+                else
+                    player.HeldItem = null;
+                Destroy(item.gameObject);
             }
-            else
-                patience.AdjustPatience(-10);
-            Destroy(player.HeldItem.gameObject);
-            player.HeldItem = null;
         }
     }
 

@@ -14,10 +14,8 @@ public class SortableItem : MonoBehaviour
     //private fields
     [SerializeField]
     private List<string> attributes = new List<string>(); //List of all the attributes you can sort the item by
-    private Camera cam;
     private Vector2 screenBounds;
     private float objectWidth;
-    private float objectHeight;
     private Rigidbody2D rb;
     private float gravityMax = -5f;
     private Vector2 lastMousePos = Vector2.zero;
@@ -33,17 +31,13 @@ public class SortableItem : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main;
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         rb = GetComponent<Rigidbody2D>();
 
         // Get the object's size based on its collider
         if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
-        {
             objectWidth = sr.bounds.extents.x;
-            objectHeight = sr.bounds.extents.y;
-        }
     }
 
     private void OnMouseDown()
@@ -68,6 +62,7 @@ public class SortableItem : MonoBehaviour
     private void OnMouseUp()
     {
         player.HeldItem = null;
+        player.recentItems.Add(this);
         // Restore gravity once released
         if (rb != null)
             rb.gravityScale = 1;
@@ -88,7 +83,10 @@ public class SortableItem : MonoBehaviour
         //but if the player throws it up it doesn't come down with uncapped velocity.
         thrownTimer -= Time.deltaTime;
         if (thrownTimer <= 0f && thrown)
+        {
             thrown = false;
+            player.recentItems.Remove(this);
+        }
 
         if (rb.velocity.y < gravityMax && !thrown)
             rb.velocity = new Vector2(rb.velocity.x, gravityMax);

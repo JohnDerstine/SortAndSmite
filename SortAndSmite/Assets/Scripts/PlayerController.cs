@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     //fields
     private float health;
-
+    public List<SortableItem> recentItems = new List<SortableItem>();
     private SortableItem heldItem;
 
     public SortableItem HeldItem
