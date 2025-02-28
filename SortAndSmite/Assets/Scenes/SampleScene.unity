@@ -351,6 +351,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98e15ad37434da40bbfa6fc2a3e27b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recentItems: []
+--- !u!1 &1075487337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1075487339}
+  - component: {fileID: 1075487338}
+  m_Layer: 0
+  m_Name: ConveyorBelt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1075487338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075487337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d2570e4510f1b449865c5edc7c4275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxPrefabs:
+  - {fileID: 7569420601472208969, guid: 5de67b20f16464649a58225261d30f97, type: 3}
+  - {fileID: 560329993672769956, guid: a4c43f298640eb64bbe3a39c2ea44722, type: 3}
+  - {fileID: 6534047944762904750, guid: 8eaa06ef401a6474d8682f8934fd1093, type: 3}
+--- !u!4 &1075487339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075487337}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5388541, y: 0.31377727, z: -0.065891795}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1450357084
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,3 +806,4 @@ SceneRoots:
   - {fileID: 1795332763146491906}
   - {fileID: 2483290366018014003}
   - {fileID: 770319549}
+  - {fileID: 1075487339}

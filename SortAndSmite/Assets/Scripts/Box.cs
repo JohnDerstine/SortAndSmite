@@ -23,7 +23,6 @@ public class Box : MonoBehaviour
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
         patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
         boss = GameObject.Find("Boss").GetComponent<Boss>();
-        bounds = gameObject.GetComponent<Collider2D>().bounds;
         sRenderer = gameObject.GetComponent<SpriteRenderer>();
         attribute = placeHolderAttributes[Random.Range(0, placeHolderAttributes.Count)];
 
@@ -60,6 +59,8 @@ public class Box : MonoBehaviour
         else
             items.Add(player.HeldItem);
 
+        bounds = gameObject.GetComponent<Collider2D>().bounds; //Update box bounds
+
         foreach (SortableItem item in items)
         {
             //if the item the player is dragging collides with this box, sort it/not, then destroy the object after.
@@ -69,10 +70,10 @@ public class Box : MonoBehaviour
                 {
                     itemsSorted++;
                     patience.AdjustPatience(7.5f);
-                    boss.TakeDamage(5); //temporary
                 }
                 else
                     patience.AdjustPatience(-10);
+
                 if (player.recentItems.Contains(item))
                     player.recentItems.Remove(item);
                 else
@@ -83,9 +84,10 @@ public class Box : MonoBehaviour
     }
 
     //When Conveyor belt is added, hook this up for when the box disapears off-screen.
-    void EmptyBox()
+    public void EmptyBox()
     {
-        boss.TakeDamage(itemsSorted);
-        Destroy(gameObject);
+        boss.TakeDamage(itemsSorted * 5f);
+
+        //Place to play animation/sound/Popups
     }
 }

@@ -20,8 +20,8 @@ public class SortableItem : MonoBehaviour
     private float gravityMax = -5f;
     private Vector2 lastMousePos = Vector2.zero;
     private bool thrown;
-    private float thrownTimer = 1f;
-    private float baseThrownTimer = 1f;
+    private float thrownTimer = 0.5f;
+    private float baseThrownTimer = 0.5f;
 
     //properties
     public List<string> Attributes
@@ -78,6 +78,9 @@ public class SortableItem : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
+            Destroy(this.gameObject);
+
         //Timer for deactivting thrown boolean
         //This is so that if the player throws downwards, it gains velocity still,
         //but if the player throws it up it doesn't come down with uncapped velocity.
@@ -92,5 +95,10 @@ public class SortableItem : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, gravityMax);
 
         lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    void OnDestroy()
+    {
+        player.recentItems.Remove(this);
     }
 }
