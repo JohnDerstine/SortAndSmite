@@ -13,11 +13,13 @@ public class Boss : MonoBehaviour
     //references
     GameController gameController;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     [SerializeField]
     private UIDocument doc;
-
     [SerializeField]
     private List<GameObject> items = new List<GameObject>();
+    [SerializeField]
+    private GameObject damageTextPrefab;
 
     //fields
     private float spawnTimer = 1.5f;
@@ -29,14 +31,17 @@ public class Boss : MonoBehaviour
     private const float spawnHeight = 5f;
     private Vector2 screenBounds;
     private ProgressBar healthBar;
+    private Color originalColor;
 
     void Start()
     {
         //Attach components
         gameController = GameObject.Find("Controller").GetComponent<GameController>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         //Initialization
+        originalColor = spriteRenderer.color;
         health = maxHealth;
         spawnTimer = spawnBaseTime;
         healthBar = doc.rootVisualElement.Q<VisualElement>("right").Q<ProgressBar>("Health");
@@ -90,6 +95,26 @@ public class Boss : MonoBehaviour
         //Play Animation
         if (animator != null)
             animator.SetTrigger("hit"); //Play hit animation if animator is present
+        StartCoroutine(FlashColor());
+        ShowDamageText(dmg);
+
+    }
+
+    private IEnumerator FlashColor()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(.2f);
+        spriteRenderer.color = originalColor;
+    }
+
+    private void ShowDamageText(float dmg)
+    {
+        if (damageTextPrefab != null) 
+        {
+            GameObject dmgText = Instantiate(damageTextPrefab, transform.position + new Vector3(0,2,0), Quaternion.identity);
+            dmgText.GetComponent<TextMesh>().text = dmg.ToString();
+            Destroy(dmgText, 1f);
+        }
 
     }
 
