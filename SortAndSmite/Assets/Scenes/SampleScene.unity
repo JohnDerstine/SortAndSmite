@@ -122,6 +122,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &90641344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 90641346}
+  - component: {fileID: 90641345}
+  m_Layer: 5
+  m_Name: StartDocument
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &90641345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90641344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 387574e963f00074986e8f33fe0c0f0a, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: b51c0fca10741fb4aaa3ee4fff3d9587, type: 3}
+  m_SortingOrder: 1
+--- !u!4 &90641346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90641344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &433329892 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7210640397477086515, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
@@ -398,6 +446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3a4909b604b0d44afb17fa615914d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainDocument: {fileID: 2129374890}
+  startDocument: {fileID: 90641345}
 --- !u!4 &858193944
 Transform:
   m_ObjectHideFlags: 0
@@ -455,6 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d2570e4510f1b449865c5edc7c4275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 858193943}
   boxPrefabs:
   - {fileID: 7569420601472208969, guid: 5de67b20f16464649a58225261d30f97, type: 3}
   - {fileID: 560329993672769956, guid: a4c43f298640eb64bbe3a39c2ea44722, type: 3}
@@ -810,7 +861,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: 387574e963f00074986e8f33fe0c0f0a, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: d08dd56ce66bb1a47a93acca8bc4dfc9, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: -1
 --- !u!4 &2129374891
 Transform:
   m_ObjectHideFlags: 0
@@ -979,6 +1030,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 2129374891}
+  - {fileID: 90641346}
   - {fileID: 858193944}
   - {fileID: 2108107958}
   - {fileID: 1450357086}

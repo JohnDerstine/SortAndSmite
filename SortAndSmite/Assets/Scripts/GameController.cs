@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //Different game states (We might not need all of these)
 public enum GameState { 
@@ -17,8 +18,15 @@ public enum GameState {
 /// </summary>
 public class GameController : MonoBehaviour
 {
+    //References
+    [SerializeField]
+    private UIDocument mainDocument;
+    [SerializeField]
+    private UIDocument startDocument;
+
     //Fields
     private GameState currentState;
+    private Button start;
 
     //Properties
     public GameState CurrentState
@@ -31,9 +39,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
-        CurrentState = GameState.Running;
+        CurrentState = GameState.Menu;
+        start = startDocument.rootVisualElement.Q<Button>("SortButton");
+        start.clickable = new Clickable(e => startGame());
     }
 
     void Update()
@@ -47,5 +57,11 @@ public class GameController : MonoBehaviour
             CurrentState = GameState.Paused;
         else if (CurrentState == GameState.Paused)
             CurrentState = GameState.Running;
+    }
+
+    private void startGame()
+    {
+        startDocument.enabled = false;
+        CurrentState = GameState.Running;
     }
 }

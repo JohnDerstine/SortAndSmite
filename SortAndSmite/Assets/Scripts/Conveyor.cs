@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Conveyor : MonoBehaviour
 {
+    //References
+    [SerializeField]
+    GameController gameController;
+
     //fields
     [SerializeField]
     private List<GameObject> boxPrefabs = new List<GameObject>();
@@ -21,6 +25,9 @@ public class Conveyor : MonoBehaviour
 
     void Update()
     {
+        if (gameController.CurrentState != GameState.Running)
+            return;
+
         boxSpawnTimer -= Time.deltaTime;
         if (boxSpawnTimer <= 0)
         {
