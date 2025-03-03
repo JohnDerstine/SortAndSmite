@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 /// <summary>
 /// This could be a parent class if we decide that boss mosnters have different ways/patterns
@@ -20,6 +21,8 @@ public class Boss : MonoBehaviour
     private List<GameObject> items = new List<GameObject>();
     [SerializeField]
     private GameObject damageTextPrefab;
+    [SerializeField]
+    private Canvas canvas;
 
     //fields
     private float spawnTimer = 1.5f;
@@ -38,7 +41,7 @@ public class Boss : MonoBehaviour
         //Attach components
         gameController = GameObject.Find("Controller").GetComponent<GameController>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         //Initialization
         originalColor = spriteRenderer.color;
@@ -84,6 +87,9 @@ public class Boss : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
+        if (dmg <= 0)
+            return;
+
         health -= dmg;
         healthBar.value = health;
         if (healthBar.value < 0)
@@ -111,11 +117,12 @@ public class Boss : MonoBehaviour
     {
         if (damageTextPrefab != null) 
         {
-            GameObject dmgText = Instantiate(damageTextPrefab, transform.position + new Vector3(0,2,0), Quaternion.identity);
-            dmgText.GetComponent<TextMesh>().text = dmg.ToString();
+            GameObject dmgText = Instantiate(damageTextPrefab, canvas.gameObject.transform, false);
+            TextMeshProUGUI textBox = dmgText.GetComponent<TextMeshProUGUI>();
+            textBox.text = dmg.ToString();
+            textBox.fontSize = 1;
             Destroy(dmgText, 1f);
         }
-
     }
 
     private void Die()

@@ -4,8 +4,8 @@
         <ui:VisualElement name="left" style="flex-grow: 1; flex-basis: 5%; align-items: center; align-self: center;">
             <ui:ProgressBar value="100" name="Patience" />
         </ui:VisualElement>
-        <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 95%; align-self: flex-end;">
-            <ui:ProgressBar value="100" name="Health" style="width: 1725px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); margin-bottom: 40px;" />
+        <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 95%; align-self: flex-start; flex-direction: column; margin-top: 100px; align-items: center;">
+            <ui:ProgressBar value="100" name="Health" style="width: 750px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); margin-bottom: 0; flex-direction: column; left: -35px; margin-top: 0; margin-right: 0; margin-left: 0;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
