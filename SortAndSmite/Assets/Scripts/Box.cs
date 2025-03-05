@@ -12,9 +12,8 @@ public class Box : MonoBehaviour
     //fields
     private Bounds bounds;
     private int itemsSorted = 0;
+    [SerializeField]
     private string attribute;
-    private List<string> placeHolderAttributes = new List<string>() { "red", "blue", "yellow", "green" };
-    private SpriteRenderer sRenderer;
 
     void Start()
     {
@@ -23,25 +22,6 @@ public class Box : MonoBehaviour
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
         patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
         boss = GameObject.Find("Boss").GetComponent<Boss>();
-        sRenderer = gameObject.GetComponent<SpriteRenderer>();
-        attribute = placeHolderAttributes[Random.Range(0, placeHolderAttributes.Count)];
-
-        //Temporary way to distinguish box type
-        switch (attribute)
-        {
-            case "red":
-                sRenderer.color = Color.red;
-                break;
-            case "blue":
-                sRenderer.color = Color.blue;
-                break;
-            case "yellow":
-                sRenderer.color = Color.yellow;
-                break;
-            case "green":
-                sRenderer.color = Color.green;
-                break;
-        }
     }
 
     //Check the player held item, and recently thrown items for collisions

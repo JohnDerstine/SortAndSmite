@@ -1,10 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/verticalProgressBar.uss?fileID=7433441132597879392&amp;guid=76876382ce388ac4987ee716fd8c5483&amp;type=3#verticalProgressBar" />
     <ui:VisualElement name="root" style="flex-grow: 1; flex-direction: row;">
-        <ui:VisualElement name="left" style="flex-grow: 1; flex-basis: 5%; align-items: center; align-self: center;">
-            <ui:ProgressBar value="100" name="Patience" />
+        <ui:VisualElement name="left" style="flex-grow: 1; flex-basis: 10%; align-items: center; align-self: center;">
+            <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/UI/patienceFrame.png?fileID=2800000&amp;guid=7d2119749ef44544bb01358a1975adef&amp;type=3#patienceFrame&quot;); align-self: auto; justify-content: center; -unity-background-scale-mode: scale-and-crop; width: 175px; height: 100px; position: relative;">
+                <ui:ProgressBar value="100" name="Patience" style="background-image: none; background-color: rgba(0, 0, 0, 0); align-self: auto; justify-content: flex-start; align-items: stretch; position: relative; left: -268px; top: 7px; right: auto; bottom: auto; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 95%; align-self: flex-start; flex-direction: column; margin-top: 100px; align-items: center;">
+        <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 90%; align-self: flex-start; flex-direction: column; margin-top: 100px; align-items: center;">
             <ui:ProgressBar value="100" name="Health" style="width: 750px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); margin-bottom: 0; flex-direction: column; left: -35px; margin-top: 0; margin-right: 0; margin-left: 0;" />
         </ui:VisualElement>
     </ui:VisualElement>

@@ -13,12 +13,16 @@ public class PatienceBar : MonoBehaviour
 
     //fields
     private ProgressBar bar;
+    private VisualElement progress;
     private VisualElement root;
+    Color baseColor;
 
     void Start()
     {
         root = document.rootVisualElement;
         bar = root.Q<VisualElement>("left").Q<ProgressBar>("Patience");
+        progress = bar.Q(className: "unity-progress-bar__progress");
+        baseColor = new Color(0.9058824f, 0.9058824f, 0.9058824f , 1);
     }
 
     // Reduce patience at a constant rate
@@ -41,5 +45,24 @@ public class PatienceBar : MonoBehaviour
         bar.value += patience;
         if (bar.value > 100)
             bar.value = 100;
+
+        if (patience > 0)
+            StartCoroutine(FlashColor(Color.green));
+        else if (patience < -1)
+            StartCoroutine(FlashColor(Color.red));
+    }
+
+    private IEnumerator FlashColor(Color color)
+    {
+        float time = 0;
+        progress.style.backgroundColor = color;
+        while (progress.style.backgroundColor != baseColor)
+        {
+            StyleColor fadeColor = new StyleColor(Color.Lerp(color, baseColor, time));
+            progress.style.backgroundColor = fadeColor;
+            time += Time.deltaTime * 3f;
+            yield return null;
+        }
+        progress.style.backgroundColor = baseColor;
     }
 }

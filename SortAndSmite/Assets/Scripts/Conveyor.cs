@@ -15,13 +15,13 @@ public class Conveyor : MonoBehaviour
     private List<GameObject> activeBoxes = new List<GameObject>();
 
     private float boxSpawnTimer = 1f;
-    private float baseTimer = 5f;
+    private float baseTimer = 6f;
 
     private GameObject lastBox;
 
-    Vector2 boxSpawnPoint = new Vector2(-8, -2.8f);
+    Vector2 boxSpawnPoint = new Vector2(-10.4f, -3);
     Vector2 boxDespawnPoint = new Vector2(10.5f, -2.8f);
-    float ConverySpeed = 1.5f;
+    float ConverySpeed = 1f;
 
     void Update()
     {

@@ -189,10 +189,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doc: {fileID: 2129374890}
   items:
-  - {fileID: 828431024081323443, guid: d3447fb77685f664e8907430a4e6c5b4, type: 3}
-  - {fileID: 828431024081323443, guid: b9ad4bbed174d2d488977ac6a13712ae, type: 3}
-  - {fileID: 828431024081323443, guid: 9ec1ba7b100bf2e4b8a07c08b5466448, type: 3}
-  - {fileID: 828431024081323443, guid: 20a1b62a4b0ecc4439402a5fb881322e, type: 3}
+  - {fileID: 6531532131778610238, guid: 6e01efbaf2d385748a9198ff0e7c1e96, type: 3}
+  - {fileID: 6531532131778610238, guid: 29ef05beafd0b4344b5b7872679223dc, type: 3}
+  - {fileID: 6531532131778610238, guid: f98be1fa7881a324abdc55cdfecd9ace, type: 3}
+  - {fileID: 6531532131778610238, guid: 3e8a200a2e1df2443b07a3acbfb8a6ea, type: 3}
+  - {fileID: 6531532131778610238, guid: 91e3829445aeb844592402a5a073963b, type: 3}
+  - {fileID: 6531532131778610238, guid: 4b71ebffb2e70b74e93dcf803c4853e4, type: 3}
+  - {fileID: 6531532131778610238, guid: 1e6948433982a5c48bc4c6e07d8ea1ad, type: 3}
+  - {fileID: 6531532131778610238, guid: 6a18afac30b43dd46a2ec3f3e6679688, type: 3}
+  - {fileID: 6531532131778610238, guid: 0305092293e783b4d9f6129afa10d264, type: 3}
+  - {fileID: 6531532131778610238, guid: 20d61a77dd79b574eb121ae3fcc3d7f9, type: 3}
+  - {fileID: 6531532131778610238, guid: f86aa4b591bb49741802db8d3ef1a8e3, type: 3}
+  - {fileID: 6531532131778610238, guid: d6c2cf8d0c66bbd408a1d9e0ce2d313c, type: 3}
+  - {fileID: 6531532131778610238, guid: 9c9bbaf96a6a0bb4e80cf5f6415bcdcd, type: 3}
+  - {fileID: 6531532131778610238, guid: 7aede4a739a539449a3848664c1d2055, type: 3}
+  - {fileID: 6531532131778610238, guid: 17fe09561ce93c748ba7fa415b0ba080, type: 3}
+  - {fileID: 6531532131778610238, guid: 75bc353dc7ccef34aa82e4d5ef66c8cc, type: 3}
   damageTextPrefab: {fileID: 3765738322416717244, guid: 80eeb1bbb92e88f40837392845648910, type: 3}
   canvas: {fileID: 1853982150}
 --- !u!1 &519420028
@@ -507,9 +519,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 858193943}
   boxPrefabs:
-  - {fileID: 7569420601472208969, guid: 5de67b20f16464649a58225261d30f97, type: 3}
-  - {fileID: 560329993672769956, guid: a4c43f298640eb64bbe3a39c2ea44722, type: 3}
-  - {fileID: 6534047944762904750, guid: 8eaa06ef401a6474d8682f8934fd1093, type: 3}
+  - {fileID: 2648335177923294334, guid: 6f6c8ad58bda64449b873f984c4aaa96, type: 3}
+  - {fileID: 2648335177923294334, guid: 2dd14e207bd62994e83f822cbd27ea05, type: 3}
+  - {fileID: 2648335177923294334, guid: 13c0de76142f3e845951d507a2782d61, type: 3}
+  - {fileID: 2648335177923294334, guid: a10b89e665dcaa547865fcea42dbfd77, type: 3}
+  - {fileID: 2648335177923294334, guid: 5c4e796e3cd29bf4ca48f32ca6108781, type: 3}
 --- !u!4 &1075487339
 Transform:
   m_ObjectHideFlags: 0
@@ -917,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3240835924390738191, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.022630017
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3240835924390738191, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
       propertyPath: m_LocalRotation.w
@@ -947,13 +961,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3342918389927472114, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6095635269517249121, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
       propertyPath: m_SortingOrder
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7210640397477086515, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210640397477086515, guid: 5ed607c59dff83c419acd5f86b10d834, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

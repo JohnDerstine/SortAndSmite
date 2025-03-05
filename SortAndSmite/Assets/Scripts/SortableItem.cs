@@ -17,7 +17,7 @@ public class SortableItem : MonoBehaviour
     private Vector2 screenBounds;
     private float objectWidth;
     private Rigidbody2D rb;
-    private float gravityMax = -5f;
+    private float gravityMax = -3f;
     private Vector2 lastMousePos = Vector2.zero;
     private bool thrown;
     private float thrownTimer = 0.5f;
@@ -47,6 +47,8 @@ public class SortableItem : MonoBehaviour
         // Disable gravity while dragging
         if (rb != null)
             rb.gravityScale = 0;
+
+        GetComponent<CircleCollider2D>().radius /= 2f;
     }
 
     void OnMouseDrag()
@@ -74,6 +76,8 @@ public class SortableItem : MonoBehaviour
         rb.velocity += mouseVelocity;
         thrown = true;
         thrownTimer = baseThrownTimer;
+
+        GetComponent<CircleCollider2D>().radius *= 2f;
     }
 
     void Update()

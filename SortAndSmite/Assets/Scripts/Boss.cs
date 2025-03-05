@@ -25,8 +25,8 @@ public class Boss : MonoBehaviour
     private Canvas canvas;
 
     //fields
-    private float spawnTimer = 1.5f;
-    private float spawnBaseTime = 1.5f;
+    private float spawnTimer = 4f;
+    private float spawnBaseTime = 2f;
     private float health = 100;
     private float maxHealth = 100f;
     private GameObject spawnItem;
@@ -46,12 +46,10 @@ public class Boss : MonoBehaviour
         //Initialization
         originalColor = spriteRenderer.color;
         health = maxHealth;
-        spawnTimer = spawnBaseTime;
         healthBar = doc.rootVisualElement.Q<VisualElement>("right").Q<ProgressBar>("Health");
 
         //Get Screen Size
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        Debug.Log(screenBounds.x);
     }
 
     //Update spawn timer
@@ -96,7 +94,7 @@ public class Boss : MonoBehaviour
             healthBar.value = 0;
 
         //increase spawn rate
-        spawnBaseTime -= 0.07f;
+        spawnBaseTime -= 0.075f;
 
         //Play Animation
         if (animator != null)
