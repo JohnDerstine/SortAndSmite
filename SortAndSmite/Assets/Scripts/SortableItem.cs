@@ -22,6 +22,7 @@ public class SortableItem : MonoBehaviour
     private bool thrown;
     private float thrownTimer = 0.5f;
     private float baseThrownTimer = 0.5f;
+    private float gravityModifier = .5f;
 
     //properties
     public List<string> Attributes
@@ -67,7 +68,7 @@ public class SortableItem : MonoBehaviour
         player.recentItems.Add(this);
         // Restore gravity once released
         if (rb != null)
-            rb.gravityScale = 1;
+            rb.gravityScale = gravityModifier;
 
         //Add mouse velocity to item to keep realistic and satisfying momentum
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -95,8 +96,8 @@ public class SortableItem : MonoBehaviour
             player.recentItems.Remove(this);
         }
 
-        if (rb.velocity.y < gravityMax && !thrown)
-            rb.velocity = new Vector2(rb.velocity.x, gravityMax);
+        if (rb.velocity.y < gravityMax * gravityModifier && !thrown)
+            rb.velocity = new Vector2(rb.velocity.x, gravityMax * gravityModifier);
 
         lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
