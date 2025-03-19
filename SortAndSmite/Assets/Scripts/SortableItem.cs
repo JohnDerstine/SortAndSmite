@@ -102,7 +102,7 @@ public class SortableItem : MonoBehaviour
 
         if (!thrown)
         {
-            float targetVelocityY = gravityModifier;
+            float targetVelocityY = gravityMax * gravityModifier;
             if (rb.velocity.y < targetVelocityY)
             {
                 rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x,targetVelocityY), Time.deltaTime * 2f);
