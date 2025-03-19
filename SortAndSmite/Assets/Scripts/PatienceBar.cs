@@ -31,7 +31,7 @@ public class PatienceBar : MonoBehaviour
         if (gameController.CurrentState != GameState.Running)
             return;
 
-        AdjustPatience(-3 * Time.deltaTime); //Multiply by difficulty/boss modifier??
+        AdjustPatience(-2 * Time.deltaTime); //Multiply by difficulty/boss modifier??
 
         if (bar.value <= 0)
             gameController.CurrentState = GameState.Defeat;

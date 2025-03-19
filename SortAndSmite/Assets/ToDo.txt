@@ -1,19 +1,17 @@
-Conveyor belt that moves boxes
-
-Sortable Item List
-
 Items rotate slowly as they fall
 
-Menu UI
+Menu UI improvements
 
 Boss Animation
 
+Fix gravity click issues (either gravity or momemtum related)
+
 UI Layout
-	- Patience bar = gradient from green to red
-	- Add clock symbol above patience bar, that shakes whenever patience is reduced.
-	- Move health bar above boss
-	- Settings button top right
+	- Trashcan top right
+	- Settings button top left
 
 Juice
 	- Numbers that appear and move to patience bar when a box is sorted
-	- Boss glows red and shakes a little when a box is sorted
+	- Boss shakes a little when a box is sorted
+	- Box glows red or green if the item sorted is correct or no
+	-green glow when box leaves the screen.
