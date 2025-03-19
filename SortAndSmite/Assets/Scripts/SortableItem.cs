@@ -22,7 +22,7 @@ public class SortableItem : MonoBehaviour
     private bool thrown;
     private float thrownTimer = 0.5f;
     private float baseThrownTimer = 0.5f;
-    private float gravityModifier = .5f;
+    private float gravityModifier = .01f;
 
     //properties
     public List<string> Attributes
@@ -68,7 +68,7 @@ public class SortableItem : MonoBehaviour
         player.recentItems.Add(this);
         // Restore gravity once released
         if (rb != null)
-            rb.gravityScale = gravityModifier;
+            rb.gravityScale = 1;
 
         //Add mouse velocity to item to keep realistic and satisfying momentum
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -89,15 +89,25 @@ public class SortableItem : MonoBehaviour
         //Timer for deactivting thrown boolean
         //This is so that if the player throws downwards, it gains velocity still,
         //but if the player throws it up it doesn't come down with uncapped velocity.
-        thrownTimer -= Time.deltaTime;
-        if (thrownTimer <= 0f && thrown)
+
+        if (thrown)
         {
-            thrown = false;
-            player.recentItems.Remove(this);
+            thrownTimer -= Time.deltaTime;
+            if (thrownTimer <= 0f)
+            {
+                thrown = false;
+                player.recentItems.Remove(this);
+            }
         }
 
-        if (rb.velocity.y < gravityMax * gravityModifier && !thrown)
-            rb.velocity = new Vector2(rb.velocity.x, gravityMax * gravityModifier);
+        if (!thrown)
+        {
+            float targetVelocityY = gravityModifier;
+            if (rb.velocity.y < targetVelocityY)
+            {
+                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x,targetVelocityY), Time.deltaTime * 2f);
+            }
+        }
 
         lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
