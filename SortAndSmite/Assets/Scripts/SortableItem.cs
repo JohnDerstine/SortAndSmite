@@ -20,9 +20,8 @@ public class SortableItem : MonoBehaviour
     private float gravityMax = -3f;
     private Vector2 lastMousePos = Vector2.zero;
     private bool thrown;
-    private float thrownTimer = 0.5f;
-    private float baseThrownTimer = 0.5f;
-    private float gravityModifier = 1f;
+    private float thrownTimer = 1f;
+    private float baseThrownTimer = 0.25f;
 
     //properties
     public List<string> Attributes
@@ -72,8 +71,8 @@ public class SortableItem : MonoBehaviour
 
         //Add mouse velocity to item to keep realistic and satisfying momentum
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * -50f;
-        mouseVelocity = new Vector2(mouseVelocity.x, mouseVelocity.y * 2f);
+        Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * 50f;
+        mouseVelocity = new Vector2(-mouseVelocity.x, -mouseVelocity.y * 1.5f);
         rb.velocity += mouseVelocity;
         thrown = true;
         thrownTimer = baseThrownTimer;
@@ -82,6 +81,18 @@ public class SortableItem : MonoBehaviour
     }
 
     void FixedUpdate()
+    {
+
+        if (!thrown)
+        {
+            if (rb.velocity.y < gravityMax)
+            {
+                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x, gravityMax), 0.1f);
+            }
+        }
+    }
+
+    void Update()
     {
         if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
             Destroy(this.gameObject);
@@ -100,18 +111,7 @@ public class SortableItem : MonoBehaviour
             }
         }
 
-        if (!thrown)
-        {
-            float targetVelocityY = gravityMax * gravityModifier;
-            if (rb.velocity.y < targetVelocityY)
-            {
-                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x,targetVelocityY), 1);
-            }
-        }
-
         lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        Debug.Log(rb.velocity.y);
     }
 
     void OnDestroy()
