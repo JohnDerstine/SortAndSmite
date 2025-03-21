@@ -8,6 +8,9 @@ public class Conveyor : MonoBehaviour
     [SerializeField]
     GameController gameController;
 
+    [SerializeField]
+    SpriteRenderer greenFade;
+
     //fields
     [SerializeField]
     private List<GameObject> boxPrefabs = new List<GameObject>();
@@ -48,8 +51,13 @@ public class Conveyor : MonoBehaviour
                 box.GetComponent<Box>().EmptyBox();
                 Destroy(box);
                 i--;
+                greenFade.color = Color.white;
             }
         }
+
+        Color transparent = greenFade.color;
+        transparent.a -= Time.deltaTime;
+        greenFade.color = transparent;
 
     }
 
