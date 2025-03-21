@@ -22,7 +22,7 @@ public class SortableItem : MonoBehaviour
     private bool thrown;
     private float thrownTimer = 0.5f;
     private float baseThrownTimer = 0.5f;
-    private float gravityModifier = .01f;
+    private float gravityModifier = 1f;
 
     //properties
     public List<string> Attributes
@@ -81,7 +81,7 @@ public class SortableItem : MonoBehaviour
         GetComponent<CircleCollider2D>().radius *= 2f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
             Destroy(this.gameObject);
@@ -105,11 +105,13 @@ public class SortableItem : MonoBehaviour
             float targetVelocityY = gravityMax * gravityModifier;
             if (rb.velocity.y < targetVelocityY)
             {
-                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x,targetVelocityY), Time.deltaTime * 2f);
+                rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(rb.velocity.x,targetVelocityY), 1);
             }
         }
 
         lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Debug.Log(rb.velocity.y);
     }
 
     void OnDestroy()
