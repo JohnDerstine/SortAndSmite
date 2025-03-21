@@ -35,6 +35,7 @@ public class Boss : MonoBehaviour
     private Vector2 screenBounds;
     private ProgressBar healthBar;
     private Color originalColor;
+    private Vector3 healthDefault;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class Boss : MonoBehaviour
         originalColor = spriteRenderer.color;
         health = maxHealth;
         healthBar = doc.rootVisualElement.Q<VisualElement>("right").Q<ProgressBar>("Health");
+        healthDefault = healthBar.transform.position;
 
         //Get Screen Size
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
@@ -118,6 +120,7 @@ public class Boss : MonoBehaviour
             healthBar.transform.position = Vector3.Lerp(healthBar.transform.position, randVector, 0.75f);
             yield return null;
         }
+        healthBar.transform.position = healthDefault;
     }
 
     private IEnumerator FlashColor()
