@@ -99,9 +99,25 @@ public class Boss : MonoBehaviour
         //Play Animation
         if (animator != null)
             animator.SetTrigger("hit"); //Play hit animation if animator is present
-        StartCoroutine(FlashColor());
+        //StartCoroutine(FlashColor());
+        StartCoroutine(ShakeHealthBar());
         ShowDamageText(dmg);
 
+    }
+
+    //Shake the healthbar randomly over time after taking damage
+    private IEnumerator ShakeHealthBar()
+    {
+        float shakeTimer = 0.35f;
+        while (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+            Vector3 randVector = new Vector3();
+            randVector.x = Random.Range(-15, 15);
+            randVector.y = Random.Range(-15, 15);
+            healthBar.transform.position = Vector3.Lerp(healthBar.transform.position, randVector, 0.75f);
+            yield return null;
+        }
     }
 
     private IEnumerator FlashColor()
@@ -119,6 +135,7 @@ public class Boss : MonoBehaviour
             TextMeshProUGUI textBox = dmgText.GetComponent<TextMeshProUGUI>();
             textBox.text = dmg.ToString();
             textBox.fontSize = 1;
+            textBox.color = Color.red;
             Destroy(dmgText, 1f);
         }
     }

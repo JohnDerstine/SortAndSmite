@@ -14,7 +14,7 @@ public class DamageText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.position += new Vector3(0, 5f * Time.deltaTime, 0);
-        text.color = new Color(text.color.r, text.color.g + 0.005f, text.color.b + 0.005f);
+        gameObject.transform.position += new Vector3(0, 2.5f * Time.deltaTime, 0);
+        text.color = new Color(text.color.r, text.color.g + 0.0005f, text.color.b + 0.0005f);
     }
 }
