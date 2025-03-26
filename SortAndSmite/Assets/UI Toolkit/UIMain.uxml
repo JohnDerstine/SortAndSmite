@@ -12,9 +12,9 @@
         <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 15%; align-self: center; flex-direction: column; margin-top: 0; align-items: center; margin-left: 0; margin-right: 30px;">
             <ui:VisualElement name="HoldContainer" style="flex-grow: 0; height: 550px; width: 200px; align-items: center; justify-content: space-around; background-color: rgb(74, 74, 74); border-top-width: 4px; border-right-width: 4px; border-bottom-width: 4px; border-left-width: 4px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); top: -60px;">
                 <ui:Label tabindex="-1" text="Hold" parse-escape-sequences="true" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255); font-size: 32px; -unity-font-style: bold;" />
-                <ui:VisualElement style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115);" />
-                <ui:VisualElement style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115);" />
-                <ui:VisualElement style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115);" />
+                <ui:VisualElement name="Slot1" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); background-image: none; -unity-background-scale-mode: scale-and-crop;" />
+                <ui:VisualElement name="Slot2" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
+                <ui:VisualElement name="Slot3" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

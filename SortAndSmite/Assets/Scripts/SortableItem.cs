@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// This will be the parent class for all items the player has to sort.
@@ -22,6 +23,9 @@ public class SortableItem : MonoBehaviour
     private bool thrown;
     private float thrownTimer = 1f;
     private float baseThrownTimer = 0.25f;
+
+    public bool retrieved;
+    public UnityEvent Released;
 
     //properties
     public List<string> Attributes
@@ -53,6 +57,16 @@ public class SortableItem : MonoBehaviour
 
     void OnMouseDrag()
     {
+        Dragging();
+    }
+
+    private void OnMouseUp()
+    {
+        StartCoroutine(ReleaseItem());
+    }
+
+    private void Dragging()
+    {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // Clamp x position to prevent dragging outside edges
@@ -61,8 +75,9 @@ public class SortableItem : MonoBehaviour
         transform.position = new Vector3(clampedX, mousePosition.y, 0f);
     }
 
-    private void OnMouseUp()
+    private IEnumerator ReleaseItem()
     {
+        yield return new WaitForEndOfFrame();
         player.HeldItem = null;
         player.recentItems.Add(this);
         // Restore gravity once released
@@ -78,6 +93,13 @@ public class SortableItem : MonoBehaviour
         thrownTimer = baseThrownTimer;
 
         GetComponent<CircleCollider2D>().radius *= 2f;
+    }
+
+    public void RetrieveRelease()
+    {
+        retrieved = false;
+        Released.RemoveAllListeners();
+        StartCoroutine(ReleaseItem());
     }
 
     void FixedUpdate()
@@ -96,6 +118,12 @@ public class SortableItem : MonoBehaviour
     {
         if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
             Destroy(this.gameObject);
+
+        //If grabbed from holding area, count as dragging.
+        if (retrieved)
+            Dragging();
+        if (Input.GetMouseButtonUp(0) && retrieved)
+            Released.Invoke();
 
         //Timer for deactivting thrown boolean
         //This is so that if the player throws downwards, it gains velocity still,
