@@ -1,7 +1,7 @@
 #Patience .unity-progress-bar__container {
     max-height: none;
-    height: 104px;
-    width: 712px;
+    height: 84px;
+    width: 498px;
     rotate: 270deg;
 }
 
