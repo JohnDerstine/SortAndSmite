@@ -47,7 +47,7 @@ public class Boss : MonoBehaviour
         //Initialization
         originalColor = spriteRenderer.color;
         health = maxHealth;
-        healthBar = doc.rootVisualElement.Q<VisualElement>("right").Q<ProgressBar>("Health");
+        healthBar = doc.rootVisualElement.Q<VisualElement>("Center").Q<ProgressBar>("Health");
         healthDefault = healthBar.transform.position;
 
         //Get Screen Size
