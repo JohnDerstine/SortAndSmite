@@ -126,6 +126,6 @@ public class HoldArea : MonoBehaviour
         if (hoverItem == null)
             return;
         hoverItem.style.left = container.WorldToLocal(Input.mousePosition).x - hoverItem.resolvedStyle.width / 2f;
-        hoverItem.style.top = ( Screen.height / 2 ) - container.WorldToLocal(Input.mousePosition).y;
+        hoverItem.style.top = ( Screen.height / 2 ) - container.WorldToLocal(Input.mousePosition).y + hoverItem.resolvedStyle.height / 2f;
     }
 }

@@ -21,6 +21,7 @@ public class Conveyor : MonoBehaviour
     private float baseTimer = 6f;
 
     private GameObject lastBox;
+    private GameObject lastLastBox;
 
     Vector2 boxSpawnPoint = new Vector2(-10.4f, -3);
     Vector2 boxDespawnPoint = new Vector2(10.5f, -2.8f);
@@ -70,7 +71,8 @@ public class Conveyor : MonoBehaviour
         {
             boxToSpawn = boxPrefabs[Random.Range(0, boxPrefabs.Count)];
         }
-        while (lastBox == boxToSpawn);
+        while (boxToSpawn == lastBox || boxToSpawn == lastLastBox);
+        lastLastBox = lastBox;
         lastBox = boxToSpawn;
 
         GameObject box = Instantiate(boxToSpawn, boxSpawnPoint, Quaternion.identity);

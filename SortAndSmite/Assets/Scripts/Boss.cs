@@ -25,11 +25,12 @@ public class Boss : MonoBehaviour
     private Canvas canvas;
 
     //fields
-    private float spawnTimer = 4f;
-    private float spawnBaseTime = 2f;
+    private float spawnTimer = 5f;
+    private float spawnBaseTime = 3f;
     private float health = 100;
     private float maxHealth = 100f;
     private GameObject spawnItem;
+    private GameObject lastItem;
     private Vector2 spawnPoint;
     private const float spawnHeight = 5f;
     private Vector2 screenBounds;
@@ -78,7 +79,12 @@ public class Boss : MonoBehaviour
 
     private void SpawnItem()
     {
-        spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
+        do
+        {
+            spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
+        }
+        while (spawnItem == lastItem);
+        lastItem = spawnItem;
 
         //Randmize x value of item spawn, within a certain range based on screen size
         spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 2f), screenBounds.x - (screenBounds.x / 2f)), spawnHeight);
