@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// This will be the parent class for all items the player has to sort.
@@ -11,6 +12,7 @@ public class SortableItem : MonoBehaviour
 {
     //refernces
     private PlayerController player;
+    private HoldArea hold;
 
     //private fields
     [SerializeField]
@@ -36,6 +38,7 @@ public class SortableItem : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
+        hold = GameObject.Find("UIDocument").GetComponent<HoldArea>();
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         rb = GetComponent<Rigidbody2D>();
 
@@ -78,6 +81,7 @@ public class SortableItem : MonoBehaviour
     private IEnumerator ReleaseItem()
     {
         yield return new WaitForEndOfFrame();
+        hold.ShowItem(null);
         player.HeldItem = null;
         player.recentItems.Add(this);
         // Restore gravity once released
@@ -117,7 +121,9 @@ public class SortableItem : MonoBehaviour
     void Update()
     {
         if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
+        {
             Destroy(this.gameObject);
+        }
 
         //If grabbed from holding area, count as dragging.
         if (retrieved)
