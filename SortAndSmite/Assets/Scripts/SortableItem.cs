@@ -16,24 +16,22 @@ public class SortableItem : MonoBehaviour
 
     //private fields
     [SerializeField]
-    private List<string> attributes = new List<string>(); //List of all the attributes you can sort the item by
+    private List<string> attributes = new List<string>(); // List of all the attributes you can sort the item by
     private Vector2 screenBounds;
     private float objectWidth;
     private Rigidbody2D rb;
     private float gravityMax = -0.7f;
     private Vector2 lastMousePos = Vector2.zero;
-    private bool thrown;
+    private bool thrown = false;
     private float thrownTimer = 1f;
     private float baseThrownTimer = 0.25f;
-
+    private Box currentBox = null;
     public bool retrieved;
     public UnityEvent Released;
 
-    //properties
-    public List<string> Attributes
-    {
-        get { return attributes; }
-    }
+
+    // Properties
+    public List<string> Attributes => attributes;
 
     void Start()
     {
@@ -43,8 +41,7 @@ public class SortableItem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         // Get the object's size based on its collider
-        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
-            objectWidth = sr.bounds.extents.x;
+        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr)) objectWidth = sr.bounds.extents.x;
     }
 
     private void OnMouseDown()
@@ -52,8 +49,7 @@ public class SortableItem : MonoBehaviour
         player.HeldItem = this;
 
         // Disable gravity while dragging
-        if (rb != null)
-            rb.gravityScale = 0;
+        if (rb != null) rb.gravityScale = 0;
 
         GetComponent<CircleCollider2D>().radius /= 2f;
     }
@@ -72,7 +68,7 @@ public class SortableItem : MonoBehaviour
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
+        transform.position = new Vector2(mousePosition.x, mousePosition.y);
     }
 
     private IEnumerator ReleaseItem()
@@ -82,10 +78,11 @@ public class SortableItem : MonoBehaviour
         player.HeldItem = null;
         player.recentItems.Add(this);
         // Restore gravity once released
-        if (rb != null)
-            rb.gravityScale = 1;
+        if (rb != null) rb.gravityScale = 1;
 
-        //Add mouse velocity to item to keep realistic and satisfying momentum
+        if (currentBox != null) currentBox.SortItem(this);
+
+        // Add mouse velocity to item to keep realistic and satisfying momentum
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * 50f;
         mouseVelocity = new Vector2(-mouseVelocity.x, -mouseVelocity.y * 1.5f);
@@ -94,6 +91,23 @@ public class SortableItem : MonoBehaviour
         thrownTimer = baseThrownTimer;
 
         GetComponent<CircleCollider2D>().radius *= 2f;
+    }
+
+    // Check for collisions with the box
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Box>(out Box box))
+        {
+            currentBox = box;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Box>(out Box box) && box == currentBox)
+        {
+            currentBox = null;
+        }
     }
 
     public void RetrieveRelease()
@@ -117,20 +131,20 @@ public class SortableItem : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y < -screenBounds.y - .5f) //Destroy when they exit the screen. .5f is half the height of items.
+        if (transform.position.y < -screenBounds.y - .5f) // Destroy when they exit the screen. .5f is half the height of items.
         {
             Destroy(this.gameObject);
         }
 
-        //If grabbed from holding area, count as dragging.
+        // If grabbed from holding area, count as dragging.
         if (retrieved)
             Dragging();
         if (Input.GetMouseButtonUp(0) && retrieved)
             Released.Invoke();
 
-        //Timer for deactivting thrown boolean
-        //This is so that if the player throws downwards, it gains velocity still,
-        //but if the player throws it up it doesn't come down with uncapped velocity.
+        // Timer for deactivting thrown boolean
+        // This is so that if the player throws downwards, it gains velocity still,
+        // but if the player throws it up it doesn't come down with uncapped velocity.
 
         if (thrown)
         {
