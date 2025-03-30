@@ -25,22 +25,42 @@ public class Box : MonoBehaviour
     }
 
     //Check the player held item, and recently thrown items for collisions
-    public void SortItem(SortableItem item)
+    void Update()
     {
-        if (item.Attributes.Contains(attribute))
+        List<SortableItem> items = new List<SortableItem>();
+
+        if (player.HeldItem == null && player.recentItems.Count == 0)
+            return;
+        else if (player.recentItems.Count != 0)
         {
-            itemsSorted++;
-            patience.AdjustPatience(7.5f);
+            foreach (SortableItem item in player.recentItems)
+                items.Add(item);
         }
         else
+            items.Add(player.HeldItem);
+
+        bounds = gameObject.GetComponent<Collider2D>().bounds; //Update box bounds
+
+        foreach (SortableItem item in items)
         {
-            patience.AdjustPatience(-10);
+            //if the item the player is dragging collides with this box, sort it/not, then destroy the object after.
+            if (bounds.Intersects(item.gameObject.GetComponent<Collider2D>().bounds))
+            {
+                if (item.Attributes.Contains(attribute))
+                {
+                    itemsSorted++;
+                    patience.AdjustPatience(7.5f);
+                }
+                else
+                    patience.AdjustPatience(-10);
+
+                if (player.recentItems.Contains(item))
+                    player.recentItems.Remove(item);
+                else
+                    player.HeldItem = null;
+                Destroy(item.gameObject);
+            }
         }
-
-        if (player.recentItems.Contains(item))
-            player.recentItems.Remove(item);
-
-        Destroy(item.gameObject);
     }
 
     //When Conveyor belt is added, hook this up for when the box disapears off-screen.
