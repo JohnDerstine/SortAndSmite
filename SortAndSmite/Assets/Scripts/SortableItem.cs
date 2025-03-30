@@ -25,15 +25,12 @@ public class SortableItem : MonoBehaviour
     private bool thrown;
     private float thrownTimer = 1f;
     private float baseThrownTimer = 0.25f;
-
+    private Box currentBox = null;
     public bool retrieved;
     public UnityEvent Released;
 
     //properties
-    public List<string> Attributes
-    {
-        get { return attributes; }
-    }
+    public List<string> Attributes => attributes;
 
     void Start()
     {
@@ -43,8 +40,7 @@ public class SortableItem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         // Get the object's size based on its collider
-        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
-            objectWidth = sr.bounds.extents.x;
+        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr)) objectWidth = sr.bounds.extents.x;
     }
 
     private void OnMouseDown()
@@ -52,8 +48,7 @@ public class SortableItem : MonoBehaviour
         player.HeldItem = this;
 
         // Disable gravity while dragging
-        if (rb != null)
-            rb.gravityScale = 0;
+        if (rb != null) rb.gravityScale = 0;
 
         GetComponent<CircleCollider2D>().radius /= 2f;
     }
@@ -82,8 +77,9 @@ public class SortableItem : MonoBehaviour
         player.HeldItem = null;
         player.recentItems.Add(this);
         // Restore gravity once released
-        if (rb != null)
-            rb.gravityScale = 1;
+        if (rb != null) rb.gravityScale = 1;
+
+        if (currentBox != null) currentBox.SortItem(this);
 
         //Add mouse velocity to item to keep realistic and satisfying momentum
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -94,6 +90,22 @@ public class SortableItem : MonoBehaviour
         thrownTimer = baseThrownTimer;
 
         GetComponent<CircleCollider2D>().radius *= 2f;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Box>(out Box box))
+        {
+            currentBox = box;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Box>(out Box box) && box == currentBox)
+        {
+            currentBox = null;
+        }
     }
 
     public void RetrieveRelease()
