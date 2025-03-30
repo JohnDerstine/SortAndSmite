@@ -70,7 +70,6 @@ public class HoldArea : MonoBehaviour
         {
             slot.style.backgroundImage = null;
             slots[slot].SetActive(true);
-            Debug.Log(slots[slot].GetComponent<SortableItem>().name);
             player.HeldItem = slots[slot].GetComponent<SortableItem>();
             player.HeldItem.retrieved = true;
             player.HeldItem.Released.AddListener(player.HeldItem.RetrieveRelease);
@@ -98,9 +97,8 @@ public class HoldArea : MonoBehaviour
             hoverItem.pickingMode = PickingMode.Ignore;
             hoverItem.style.width = sr.bounds.size.x * 100;
             hoverItem.style.height = sr.bounds.size.y * 100;
-            hoverItem.style.transformOrigin = new StyleTransformOrigin(new TransformOrigin(sr.bounds.size.x * 100 / 2f, sr.bounds.size.y * 100 / 2));
-            hoverItem.style.left = pos.x;
-            hoverItem.style.top = pos.y;
+            hoverItem.style.left = container.WorldToLocal(Input.mousePosition).x - hoverItem.resolvedStyle.width / 2f;
+            hoverItem.style.top = ( Screen.height / 2 ) - container.WorldToLocal(Input.mousePosition).y + hoverItem.resolvedStyle.height / 2f;
             hoverItem.style.flexGrow = 0;
             container.Add(hoverItem);
             sr.enabled = false;
@@ -126,6 +124,6 @@ public class HoldArea : MonoBehaviour
         if (hoverItem == null)
             return;
         hoverItem.style.left = container.WorldToLocal(Input.mousePosition).x - hoverItem.resolvedStyle.width / 2f;
-        hoverItem.style.top = ( Screen.height / 2 ) - container.WorldToLocal(Input.mousePosition).y;
+        hoverItem.style.top = ( Screen.height / 2 ) - container.WorldToLocal(Input.mousePosition).y + hoverItem.resolvedStyle.height / 2f;
     }
 }

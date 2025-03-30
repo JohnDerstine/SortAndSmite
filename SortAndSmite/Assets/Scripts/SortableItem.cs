@@ -20,7 +20,7 @@ public class SortableItem : MonoBehaviour
     private Vector2 screenBounds;
     private float objectWidth;
     private Rigidbody2D rb;
-    private float gravityMax = -1f;
+    private float gravityMax = -0.7f;
     private Vector2 lastMousePos = Vector2.zero;
     private bool thrown;
     private float thrownTimer = 1f;
