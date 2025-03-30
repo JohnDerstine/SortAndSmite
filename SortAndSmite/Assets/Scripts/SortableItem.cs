@@ -72,7 +72,7 @@ public class SortableItem : MonoBehaviour
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
+        transform.position = new Vector2(mousePosition.x, mousePosition.y);
     }
 
     private IEnumerator ReleaseItem()
