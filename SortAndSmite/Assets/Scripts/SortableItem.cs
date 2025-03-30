@@ -72,10 +72,7 @@ public class SortableItem : MonoBehaviour
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Clamp x position to prevent dragging outside edges
-        float clampedX = Mathf.Clamp(mousePosition.x, -screenBounds.x + objectWidth, screenBounds.x - objectWidth);
-
-        transform.position = new Vector3(clampedX, mousePosition.y, 0f);
+        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
     }
 
     private IEnumerator ReleaseItem()
