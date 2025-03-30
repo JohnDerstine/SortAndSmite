@@ -73,7 +73,12 @@ public class SortableItem : MonoBehaviour
 
     private IEnumerator ReleaseItem()
     {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * 50f;
+        mouseVelocity = new Vector2(-mouseVelocity.x, -mouseVelocity.y * 1.5f);
+
         yield return new WaitForEndOfFrame();
+
         hold.ShowItem(null);
         player.HeldItem = null;
         player.recentItems.Add(this);
@@ -83,9 +88,6 @@ public class SortableItem : MonoBehaviour
         if (currentBox != null) currentBox.SortItem(this);
 
         // Add mouse velocity to item to keep realistic and satisfying momentum
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseVelocity = (lastMousePos - mousePosition).normalized * (lastMousePos - mousePosition).magnitude * 50f;
-        mouseVelocity = new Vector2(-mouseVelocity.x, -mouseVelocity.y * 1.5f);
         rb.velocity += mouseVelocity;
         thrown = true;
         thrownTimer = baseThrownTimer;
