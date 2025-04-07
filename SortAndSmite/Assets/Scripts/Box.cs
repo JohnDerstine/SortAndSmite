@@ -57,7 +57,7 @@ public class Box : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("HeldItem"))
+        if (other.GetComponent<SortableItem>() != null)
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
@@ -67,7 +67,7 @@ public class Box : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("HeldItem"))
+        if (other.GetComponent<SortableItem>() != null)
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
