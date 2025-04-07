@@ -8,6 +8,7 @@ public class Box : MonoBehaviour
     private PlayerController player;
     private Boss boss;
     private PatienceBar patience;
+    private GameController controller;
 
     //animation
     private SpriteRenderer spriteRenderer;
@@ -25,6 +26,7 @@ public class Box : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
+        controller = GameObject.Find("Controller").GetComponent<GameController>();
         patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
         boss = GameObject.Find("Boss").GetComponent<Boss>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -33,6 +35,11 @@ public class Box : MonoBehaviour
     //Check the player held item, and recently thrown items for collisions
     public void SortItem(SortableItem item)
     {
+        Debug.Log("tried");
+
+        if (controller.CurrentState == GameState.Paused && (controller.itemSorted || !controller.tutorialEnabled))
+            return;
+
         if (item.Attributes.Contains(attribute))
         {
             itemsSorted++;
@@ -47,6 +54,9 @@ public class Box : MonoBehaviour
             player.recentItems.Remove(item);
 
         Destroy(item.gameObject);
+
+        if (controller.tutorialEnabled && !controller.itemSorted)
+            controller.itemSorted = true;
     }
 
     //Empty the box to cause damage to the boss

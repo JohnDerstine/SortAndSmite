@@ -20,6 +20,7 @@ public class Conveyor : MonoBehaviour
     private float boxSpawnTimer = 1f;
     private float baseTimer = 7f;
 
+    public SpriteRenderer activeBox;
     private GameObject lastBox;
     private GameObject lastLastBox;
 
@@ -65,17 +66,30 @@ public class Conveyor : MonoBehaviour
     //Spawn new box at the beginning of the conveyor belt
     private void SpawnBox()
     {
+        if (!gameController.boxSpawned)
+            StartCoroutine(WaitForConveyor());
+
         //Make sure the box isn't the same as the last.
         GameObject boxToSpawn;
         do
         {
-            boxToSpawn = boxPrefabs[Random.Range(0, boxPrefabs.Count)];
+            if (gameController.tutorialEnabled && !gameController.boxSpawned)
+                boxToSpawn = boxPrefabs[3];
+            else
+                boxToSpawn = boxPrefabs[Random.Range(0, boxPrefabs.Count)];
         }
         while (boxToSpawn == lastBox || boxToSpawn == lastLastBox);
         lastLastBox = lastBox;
         lastBox = boxToSpawn;
 
         GameObject box = Instantiate(boxToSpawn, boxSpawnPoint, Quaternion.identity);
+        activeBox = box.GetComponent<SpriteRenderer>();
         activeBoxes.Add(box);
+    }
+
+    private IEnumerator WaitForConveyor()
+    {
+        yield return new WaitForSeconds(4);
+        gameController.boxSpawned = true;
     }
 }

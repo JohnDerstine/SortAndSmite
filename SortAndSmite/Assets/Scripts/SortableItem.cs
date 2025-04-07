@@ -12,6 +12,7 @@ public class SortableItem : MonoBehaviour
 {
     //refernces
     private PlayerController player;
+    private GameController gameController;
     private HoldArea hold;
 
     //private fields
@@ -36,6 +37,7 @@ public class SortableItem : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Controller").GetComponent<PlayerController>();
+        gameController = GameObject.Find("Controller").GetComponent<GameController>();
         hold = GameObject.Find("UIDocument").GetComponent<HoldArea>();
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         rb = GetComponent<Rigidbody2D>();
@@ -46,29 +48,40 @@ public class SortableItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-        player.HeldItem = this;
+        if (gameController.CurrentState == GameState.Running || (gameController.CurrentState == GameState.Paused && gameController.tutorialEnabled && !gameController.itemSorted))
+        {
+            if (rb.bodyType == RigidbodyType2D.Static)
+                rb.bodyType = RigidbodyType2D.Dynamic;
 
-        // Disable gravity while dragging
-        if (rb != null) rb.gravityScale = 0;
+            player.HeldItem = this;
 
-        GetComponent<CircleCollider2D>().radius /= 2f;
+            // Disable gravity while dragging
+            if (rb != null) rb.gravityScale = 0;
+
+            GetComponent<CircleCollider2D>().radius /= 2f;
+        }
     }
 
     void OnMouseDrag()
     {
-        Dragging();
+        if (gameController.CurrentState == GameState.Running || (gameController.CurrentState == GameState.Paused && gameController.tutorialEnabled && !gameController.itemSorted))
+            Dragging();
     }
 
     private void OnMouseUp()
     {
-        StartCoroutine(ReleaseItem());
+        if (gameController.CurrentState == GameState.Running || (gameController.CurrentState == GameState.Paused && gameController.tutorialEnabled && !gameController.itemSorted))
+            StartCoroutine(ReleaseItem());
     }
 
     private void Dragging()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (gameController.CurrentState == GameState.Running || (gameController.CurrentState == GameState.Paused && gameController.tutorialEnabled && !gameController.itemSorted))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        transform.position = new Vector2(mousePosition.x, mousePosition.y);
+            transform.position = new Vector2(mousePosition.x, mousePosition.y);
+        }
     }
 
     private IEnumerator ReleaseItem()
@@ -85,19 +98,25 @@ public class SortableItem : MonoBehaviour
         // Restore gravity once released
         if (rb != null) rb.gravityScale = 1;
 
-        if (currentBox != null) currentBox.SortItem(this);
+        Debug.Log(currentBox);
+        if (currentBox != null)
+            currentBox.SortItem(this);
 
         // Add mouse velocity to item to keep realistic and satisfying momentum
-        rb.velocity += mouseVelocity;
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
+            rb.velocity += mouseVelocity;
         thrown = true;
         thrownTimer = baseThrownTimer;
 
         GetComponent<CircleCollider2D>().radius *= 2f;
+        if (gameController.CurrentState == GameState.Paused)
+            rb.bodyType = RigidbodyType2D.Static;
     }
 
     // Check for collisions with the box
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("detected");
         if (other.TryGetComponent<Box>(out Box box))
         {
             currentBox = box;
@@ -121,6 +140,16 @@ public class SortableItem : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (gameController.CurrentState == GameState.Paused)
+        {
+            rb.bodyType = RigidbodyType2D.Static;
+            return;
+        }
+        else if (gameController.CurrentState == GameState.Running && rb.bodyType != RigidbodyType2D.Dynamic)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+        }
+
 
         if (!thrown)
         {
@@ -133,6 +162,9 @@ public class SortableItem : MonoBehaviour
 
     void Update()
     {
+        if (gameController.CurrentState == GameState.Paused)
+            return;
+
         if (transform.position.y < -screenBounds.y - .5f) // Destroy when they exit the screen. .5f is half the height of items.
         {
             Destroy(this.gameObject);
