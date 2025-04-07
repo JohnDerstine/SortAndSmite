@@ -6,9 +6,9 @@
                 <ui:ProgressBar value="100" name="Patience" style="background-image: none; background-color: rgba(0, 0, 0, 0); align-self: auto; justify-content: flex-start; align-items: stretch; position: relative; left: 500px; top: 7px; right: auto; bottom: auto; -unity-background-image-tint-color: rgb(255, 255, 255); flex-grow: 0; flex-shrink: 0; height: auto; width: auto;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Center" style="flex-grow: 1; flex-basis: 70%; align-items: center; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="Center" style="flex-grow: 1; flex-basis: 70%; align-items: center;">
             <ui:ProgressBar value="100" name="Health" style="width: 750px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0); margin-bottom: 0; flex-direction: column; left: 40px; margin-top: 100px; margin-right: 0; margin-left: 0; align-items: stretch; justify-content: flex-start; align-self: auto; flex-shrink: 0; flex-grow: 0;" />
-            <ui:VisualElement name="HpIcon" style="flex-grow: 0; position: absolute; width: 150px; height: 96px; background-image: url(&quot;project://database/Assets/Sprites/HPSymbol.png?fileID=2800000&amp;guid=b681ba971dff0ea4a9492d7f615c82ff&amp;type=3#HPSymbol&quot;); left: 225px; top: 62px; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+            <ui:VisualElement style="flex-grow: 0; position: absolute; width: 150px; height: 96px; background-image: url(&quot;project://database/Assets/Sprites/HPSymbol.png?fileID=2800000&amp;guid=b681ba971dff0ea4a9492d7f615c82ff&amp;type=3#HPSymbol&quot;); left: 225px; top: 62px;" />
         </ui:VisualElement>
         <ui:VisualElement name="right" style="flex-grow: 1; flex-basis: 15%; align-self: center; flex-direction: column; margin-top: 0; align-items: center; margin-left: 0; margin-right: 30px;">
             <ui:VisualElement name="HoldContainer" style="flex-grow: 0; height: 550px; width: 200px; align-items: center; justify-content: space-around; background-color: rgb(74, 74, 74); border-top-width: 4px; border-right-width: 4px; border-bottom-width: 4px; border-left-width: 4px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); top: -80px;">
@@ -16,7 +16,6 @@
                 <ui:VisualElement name="Slot1" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); background-image: none; -unity-background-scale-mode: scale-and-crop;" />
                 <ui:VisualElement name="Slot2" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
                 <ui:VisualElement name="Slot3" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
-                <ui:VisualElement name="HoldTint" style="flex-grow: 0; position: absolute; width: 200px; height: 550px; top: 0; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(0, 0, 0);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

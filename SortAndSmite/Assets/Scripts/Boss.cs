@@ -25,7 +25,7 @@ public class Boss : MonoBehaviour
     private Canvas canvas;
 
     //fields
-    private float spawnTimer = 5.2f;
+    private float spawnTimer = 5f;
     private float spawnBaseTime = 3f;
     private float health = 100;
     private float maxHealth = 100f;
@@ -37,8 +37,6 @@ public class Boss : MonoBehaviour
     private ProgressBar healthBar;
     private Color originalColor;
     private Vector3 healthDefault;
-    private int itemCount = 0;
-    public GameObject activeItem;
 
     void Start()
     {
@@ -83,24 +81,14 @@ public class Boss : MonoBehaviour
     {
         do
         {
-            if (gameController.tutorialEnabled && itemCount == 0)
-                spawnItem = items[3];
-            else
-                spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
+            spawnItem = items[Random.Range(0, items.Count)]; //Select random item from list of spawnable items
         }
         while (spawnItem == lastItem);
         lastItem = spawnItem;
 
         //Randmize x value of item spawn, within a certain range based on screen size
-        //If tutorial enabled, spawn it in middle
-        if (gameController.tutorialEnabled && itemCount == 0)
-            spawnPoint = new Vector2(0, spawnHeight);
-        else
-            spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 2f), screenBounds.x - (screenBounds.x / 2f)), spawnHeight);
-        
-
-        activeItem = Instantiate(spawnItem, spawnPoint, Quaternion.identity);
-        itemCount++;
+        spawnPoint = new Vector2(Random.Range(-screenBounds.x + (screenBounds.x / 2f), screenBounds.x - (screenBounds.x / 2f)), spawnHeight);
+        Instantiate(spawnItem, spawnPoint, Quaternion.identity);
     }
 
     public void TakeDamage(float dmg)
