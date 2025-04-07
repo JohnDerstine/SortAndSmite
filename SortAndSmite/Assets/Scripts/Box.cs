@@ -11,8 +11,8 @@ public class Box : MonoBehaviour
 
     //animation
     private SpriteRenderer spriteRenderer;
-    private Sprite[] boxOpeningFrames;
-    private Sprite[] boxClosingFrames;
+    public Sprite[] boxOpeningFrames;
+    public Sprite[] boxClosingFrames;
     private Coroutine currentAnimation;
 
     //fields
