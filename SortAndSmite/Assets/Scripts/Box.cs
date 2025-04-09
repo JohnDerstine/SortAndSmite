@@ -70,7 +70,7 @@ public class Box : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<SortableItem>() != null)
+        if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
@@ -80,7 +80,7 @@ public class Box : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<SortableItem>() != null)
+        if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
@@ -90,6 +90,7 @@ public class Box : MonoBehaviour
 
     private IEnumerator PlayAnimation(Sprite[] frames)
     {
+        Debug.Log("Playing animation");
         for (int i = 0; i < frames.Length; i++)
         {
             spriteRenderer.sprite = frames[i];
