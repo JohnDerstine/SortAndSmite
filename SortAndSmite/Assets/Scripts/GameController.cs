@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     //Fields
     private GameState currentState;
     private Button start;
-    public bool tutorialEnabled = false;
+    public bool tutorialEnabled;
     private SpriteRenderer currentFocus;
     private int originalOrder;
     private int tintOrder = -11;
@@ -127,6 +127,7 @@ public class GameController : MonoBehaviour
 
     private void startGame()
     {
+        tutorialEnabled = startDocument.rootVisualElement.Q<Toggle>().value;
         startDocument.enabled = false;
         if (tutorialEnabled)
         {
