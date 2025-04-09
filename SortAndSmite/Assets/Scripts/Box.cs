@@ -55,8 +55,11 @@ public class Box : MonoBehaviour
 
         Destroy(item.gameObject);
 
-        if (controller.tutorialEnabled && !controller.itemSorted)
+        if (!controller.itemSorted)
+        {
             controller.itemSorted = true;
+            controller.gameplayStarted = true;
+        }
     }
 
     //Empty the box to cause damage to the boss

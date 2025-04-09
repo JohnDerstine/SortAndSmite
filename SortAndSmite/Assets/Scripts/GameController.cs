@@ -29,6 +29,10 @@ public class GameController : MonoBehaviour
     private Boss boss;
     [SerializeField]
     private Conveyor conveyor;
+    [SerializeField]
+    private GameObject victoryText;
+    [SerializeField]
+    private GameObject defeatText;
 
     [SerializeField]
     private SpriteRenderer tint;
@@ -62,6 +66,7 @@ public class GameController : MonoBehaviour
     private bool step8;
     private bool step9;
     private TemplateContainer popUpElement;
+    public bool gameplayStarted = false;
 
     private string step1Text = "This is your landlord, who is trying to evict you! You've made your payments on time and have been nothing but respectful!";
     private string step2Text = "This is his health bar. If you want to live in peace, you'll have to completely drain his health bar.";
@@ -92,6 +97,16 @@ public class GameController : MonoBehaviour
             {
                 foreach (GameObject item in boss.activeItems)
                     item.GetComponent<SortableItem>().SetItemBody(RigidbodyType2D.Dynamic);
+            }
+            else if (CurrentState == GameState.Victory)
+            {
+                mainDocument.rootVisualElement.Clear();
+                victoryText.SetActive(true);
+            }
+            else if (CurrentState == GameState.Defeat)
+            {
+                mainDocument.rootVisualElement.Clear();
+                defeatText.SetActive(true);
             }
         }
     }
@@ -272,7 +287,7 @@ public class GameController : MonoBehaviour
         holdTint.style.backgroundColor = new Color(0, 0, 0, 0f);
         patienceArt.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
         patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
-        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
+        patienceContainer.style.backgroundColor = new Color(0.7372549f, 0.7372549f, 0.7372549f, 1);
         healthIcon.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
         healthProgress.style.backgroundColor = new Color(1f, 0f, 0f);
         healthContainer.style.backgroundColor = new Color(0.95f, 0.95f, 0.95f);
@@ -287,7 +302,7 @@ public class GameController : MonoBehaviour
     {
         patienceArt.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
         patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
-        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
+        patienceContainer.style.backgroundColor = new Color(0.7372549f, 0.7372549f, 0.7372549f, 1);
     }
 
     private void BringHealthForward()
