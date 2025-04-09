@@ -16,7 +16,7 @@
                 <ui:VisualElement name="Slot1" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); background-image: none; -unity-background-scale-mode: scale-and-crop;" />
                 <ui:VisualElement name="Slot2" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
                 <ui:VisualElement name="Slot3" style="flex-grow: 0; width: 128px; height: 128px; background-color: rgb(115, 115, 115); -unity-background-scale-mode: scale-and-crop;" />
-                <ui:VisualElement name="HoldTint" style="flex-grow: 0; position: absolute; width: 200px; height: 550px; top: 0; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(0, 0, 0);" />
+                <ui:VisualElement name="HoldTint" picking-mode="Ignore" style="flex-grow: 0; position: absolute; width: 200px; height: 550px; top: 0; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(0, 0, 0);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

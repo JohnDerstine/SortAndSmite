@@ -9,7 +9,7 @@ public class Conveyor : MonoBehaviour
     GameController gameController;
 
     [SerializeField]
-    SpriteRenderer greenFade;
+    public SpriteRenderer greenFade;
 
     //fields
     [SerializeField]
@@ -54,6 +54,7 @@ public class Conveyor : MonoBehaviour
                 Destroy(box);
                 i--;
                 greenFade.color = Color.white;
+                gameController.boxLeft = true;
             }
         }
 

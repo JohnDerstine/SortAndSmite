@@ -291,6 +291,7 @@ MonoBehaviour:
   - {fileID: 6531532131778610238, guid: 75bc353dc7ccef34aa82e4d5ef66c8cc, type: 3}
   damageTextPrefab: {fileID: 3765738322416717244, guid: 80eeb1bbb92e88f40837392845648910, type: 3}
   canvas: {fileID: 1853982150}
+  activeItems: []
   activeItem: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
@@ -547,9 +548,12 @@ MonoBehaviour:
   startDocument: {fileID: 90641345}
   popup: {fileID: 9197481963319205126, guid: da6f33707666d4b4ea15fd6450be43be, type: 3}
   boss: {fileID: 433329893}
+  conveyor: {fileID: 1075487338}
   tint: {fileID: 1402083018}
-  tutorialEnabled: 1
+  tutorialEnabled: 0
   boxSpawned: 0
+  itemSorted: 0
+  boxLeft: 0
 --- !u!4 &858193944
 Transform:
   m_ObjectHideFlags: 0

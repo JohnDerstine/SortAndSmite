@@ -24,8 +24,10 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private Canvas canvas;
 
+    public List<GameObject> activeItems = new List<GameObject>();
+ 
     //fields
-    private float spawnTimer = 5.2f;
+    private float spawnTimer = 5.0f;
     private float spawnBaseTime = 3f;
     private float health = 100;
     private float maxHealth = 100f;
@@ -100,7 +102,10 @@ public class Boss : MonoBehaviour
         
 
         activeItem = Instantiate(spawnItem, spawnPoint, Quaternion.identity);
+        if (gameController.tutorialEnabled && itemCount == 0)
+            activeItem.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         itemCount++;
+        activeItems.Add(activeItem);
     }
 
     public void TakeDamage(float dmg)

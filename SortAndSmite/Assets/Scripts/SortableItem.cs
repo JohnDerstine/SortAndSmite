@@ -116,7 +116,6 @@ public class SortableItem : MonoBehaviour
     // Check for collisions with the box
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("detected");
         if (other.TryGetComponent<Box>(out Box box))
         {
             currentBox = box;
@@ -138,19 +137,13 @@ public class SortableItem : MonoBehaviour
         StartCoroutine(ReleaseItem());
     }
 
+    public void SetItemBody(RigidbodyType2D type)
+    {
+        rb.bodyType = type;
+    }
+
     void FixedUpdate()
     {
-        if (gameController.CurrentState == GameState.Paused)
-        {
-            rb.bodyType = RigidbodyType2D.Static;
-            return;
-        }
-        else if (gameController.CurrentState == GameState.Running && rb.bodyType != RigidbodyType2D.Dynamic)
-        {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-        }
-
-
         if (!thrown)
         {
             if (rb.velocity.y < gravityMax)
@@ -196,5 +189,8 @@ public class SortableItem : MonoBehaviour
     void OnDestroy()
     {
         player.recentItems.Remove(this);
+        if (GameObject.Find("Boss").GetComponent<Boss>().activeItem == this.gameObject)
+            GameObject.Find("Boss").GetComponent<Boss>().activeItem = null;
+        GameObject.Find("Boss").GetComponent<Boss>().activeItems.Remove(this.gameObject);
     }
 }

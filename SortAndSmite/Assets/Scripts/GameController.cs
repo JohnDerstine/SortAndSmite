@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     private VisualTreeAsset popup;
     [SerializeField]
     private Boss boss;
+    [SerializeField]
+    private Conveyor conveyor;
 
     [SerializeField]
     private SpriteRenderer tint;
@@ -34,7 +36,7 @@ public class GameController : MonoBehaviour
     //Fields
     private GameState currentState;
     private Button start;
-    public bool tutorialEnabled = true;
+    public bool tutorialEnabled = false;
     private SpriteRenderer currentFocus;
     private int originalOrder;
     private int tintOrder = -11;
@@ -51,17 +53,26 @@ public class GameController : MonoBehaviour
     public bool boxSpawned;
     private bool step3;
     private bool step4;
+    private bool step42;
     public bool itemSorted;
     private bool step5;
     private bool step6;
+    private bool step7;
+    public bool boxLeft;
+    private bool step8;
+    private bool step9;
     private TemplateContainer popUpElement;
 
-    private string step1Text = "This is your landlord, which is trying to evict you! You've made your payments on time and have been nothing but respectful!";
-    private string step2Text = "This is his health bar. If you want to live in peace, you'll have to reduce his health to 0.";
-    private string step3Text = "Boxes will appear on this conveyor belt containg a label. Yor goal will be to sort items into the box that fit the label.";
-    private string step4Text = "Items will fall from the sky as your landlord throws them at you! These are the items you must sort into the boxes. Start by sorting this item into the box.";
-    private string step5Text = "Step 5";
-    private string step6Text = "Step 6";
+    private string step1Text = "This is your landlord, who is trying to evict you! You've made your payments on time and have been nothing but respectful!";
+    private string step2Text = "This is his health bar. If you want to live in peace, you'll have to completely drain his health bar.";
+    private string step3Text = "Boxes will appear on this conveyor belt, each with a label.";
+    private string step4Text = "Items will fall from the sky as your landlord throws them at you! Your goal will be to sort these items into boxes with a matching label.";
+    private string step4Text2 = "Some items can be sorted into multiple categories. Sort this item into the box by clicking and dragging it.";
+    private string step5Text = "This is the patience bar. You'll lose patience over time, and gain patience by correctly sorting items. If you sort an item wrong, you will lose a large chunk of patience.";
+    private string step6Text = "You can tell if an item is sorted correctly, because the patience bar will flash green. Otherwise it will flash red. If then patience runs out, you'll get evicted!";
+    private string step7Text = "This is the hold area. You can store up to 3 items here for later. Just click and drag an item into one of the slots to store it. Click and drag a stored item to retrieve it.";
+    private string step8Text = "When a box reaches the end of the conveyor belt, it is emptied. You deal damage to the boss for every correctly sorted item in that box.";
+    private string step9Text = "The tutorial is now over, good luck sorting!";
 
     //Properties
     public GameState CurrentState
@@ -71,6 +82,17 @@ public class GameController : MonoBehaviour
         {
             //If we want to do things before changing the state, we can do them here.
             currentState = value;
+
+            if (CurrentState == GameState.Paused)
+            {
+                foreach (GameObject item in boss.activeItems)
+                    item.GetComponent<SortableItem>().SetItemBody(RigidbodyType2D.Static);
+            }
+            else if (CurrentState == GameState.Running)
+            {
+                foreach (GameObject item in boss.activeItems)
+                    item.GetComponent<SortableItem>().SetItemBody(RigidbodyType2D.Dynamic);
+            }
         }
     }
 
@@ -120,7 +142,7 @@ public class GameController : MonoBehaviour
     private IEnumerator StartTutorial()
     {
         SendAllToBack();
-        AddPopup(Screen.width / 2, Screen.height / 2, step1Text);
+        AddPopup(Screen.width / 2f, Screen.height / 2, step1Text);
         BringToFrontObject(GameObject.Find("Boss").GetComponentInChildren<SpriteRenderer>());
         yield return new WaitWhile(() => !step1);
 
@@ -132,7 +154,7 @@ public class GameController : MonoBehaviour
         Debug.Log("Heath Time");
         yield return new WaitWhile(() => !step2);
 
-        SendAllToBack();
+        BringAllToFront();
         ResetObjectOrder();
         CurrentState = GameState.Running;
         Debug.Log("Waiting for box to spawn");
@@ -140,6 +162,7 @@ public class GameController : MonoBehaviour
 
         CurrentState = GameState.Paused;
 
+        SendAllToBack();
         BringToFrontObject(GameObject.Find("ConveyorBelt").GetComponent<Conveyor>().activeBox);
         AddPopup(Screen.width / 9, Screen.height / 2, step3Text);
         Debug.Log("Box Time");
@@ -154,9 +177,13 @@ public class GameController : MonoBehaviour
         CurrentState = GameState.Paused;
 
         BringToFrontObject(boss.activeItem.GetComponent<SpriteRenderer>());
-        AddPopup(Screen.width / 9, Screen.height / 2, step4Text);
+        AddPopup(Screen.width / 2.1f, Screen.height / 2.4f, step4Text);
         Debug.Log("Item time");
         yield return new WaitWhile(() => !step4);
+
+        AddPopup(Screen.width / 2.1f, Screen.height / 2.4f, step4Text2);
+        Debug.Log("Item time 2");
+        yield return new WaitWhile(() => !step42);
 
         ResetObjectOrder();
         SendAllToBack();
@@ -166,15 +193,45 @@ public class GameController : MonoBehaviour
         SendAllToBack();
         ResetObjectOrder();
         BringPatienceForward();
+        TintEverything();
         AddPopup(Screen.width / 9, Screen.height / 2, step5Text);
         Debug.Log("Patience Time");
         yield return new WaitWhile(() => !step5);
 
-        SendAllToBack();
-        BringHoldForward();
-        AddPopup(0, 0, step6Text);
-        Debug.Log("Hold Time");
+        AddPopup(Screen.width / 9, Screen.height / 2, step6Text);
+        Debug.Log("Patience Time 2");
         yield return new WaitWhile(() => !step6);
+
+        SendAllToBack();
+        ResetObjectOrder();
+        BringHoldForward();
+        TintEverything();
+        AddPopup(Screen.width / 1.85f , Screen.height / 2, step7Text);
+        Debug.Log("Hold Time");
+        yield return new WaitWhile(() => !step7);
+
+        CurrentState = GameState.Running;
+
+        ResetObjectOrder();
+        BringAllToFront();
+        Debug.Log("Waiting for box to empty");
+        yield return new WaitWhile(() => !boxLeft);
+
+        CurrentState = GameState.Paused;
+
+        SendAllToBack();
+        ResetObjectOrder();
+        BringToFrontObject(conveyor.greenFade);
+        AddPopup(Screen.width / 1.6f, Screen.height / 1.25f, step8Text);
+        Debug.Log("Damage time");
+        yield return new WaitWhile(() => !step8);
+
+        SendAllToBack();
+        ResetObjectOrder();
+        TintEverything();
+        AddPopup(Screen.width / 2.8f, Screen.height / 2f, step9Text);
+        Debug.Log("Damage time");
+        yield return new WaitWhile(() => !step9);
 
         ResetObjectOrder();
         BringAllToFront();
@@ -194,7 +251,8 @@ public class GameController : MonoBehaviour
     }
     private void ResetObjectOrder()
     {
-        currentFocus.sortingOrder = originalOrder;
+        if (currentFocus != null)
+            currentFocus.sortingOrder = originalOrder;
         tint.sortingOrder = tintOrder;
     }
 
@@ -211,10 +269,10 @@ public class GameController : MonoBehaviour
     private void BringAllToFront()
     {
         holdTint.style.backgroundColor = new Color(0, 0, 0, 0f);
-        patienceArt.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
-        patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f);
-        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f);
-        healthIcon.style.unityBackgroundImageTintColor = new Color(0, 0, 0, 0);
+        patienceArt.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
+        patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
+        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
+        healthIcon.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
         healthProgress.style.backgroundColor = new Color(1f, 0f, 0f);
         healthContainer.style.backgroundColor = new Color(0.95f, 0.95f, 0.95f);
     }
@@ -227,8 +285,8 @@ public class GameController : MonoBehaviour
     private void BringPatienceForward()
     {
         patienceArt.style.unityBackgroundImageTintColor = new Color(1, 1, 1, 1);
-        patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f);
-        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f);
+        patienceProgress.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
+        patienceContainer.style.backgroundColor = new Color(0.9058824f, 0.9058824f, 0.9058824f, 1);
     }
 
     private void BringHealthForward()
@@ -259,11 +317,19 @@ public class GameController : MonoBehaviour
             step3 = true;
         else if (!step4)
             step4 = true;
+        else if (!step42)
+            step42 = true;
         else if (!step5)
             step5 = true;
         else if (!step6)
-        {
             step6 = true;
+        else if (!step7)
+            step7= true;
+        else if (!step8)
+            step8 = true;
+        else if (!step9)
+        {
+            step9 = true;
             CurrentState = GameState.Running;
         }
 

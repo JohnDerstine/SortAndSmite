@@ -50,6 +50,7 @@ public class HoldArea : MonoBehaviour
 
     private void DropItem(MouseUpEvent e)
     {
+        Debug.Log("dropped");
         VisualElement slot = e.currentTarget as VisualElement;
         if (player.HeldItem != null && slots[slot] == null)
         {
