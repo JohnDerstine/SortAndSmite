@@ -166,6 +166,32 @@ MonoBehaviour:
   - {fileID: -621666651, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
   - {fileID: -1212811245, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
   - {fileID: 920067267, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
-  boxClosingFrames: []
+  boxClosingFrames:
+  - {fileID: 1881310033, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1224967908, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 689666121, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 112713581, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1312674729, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 108025652, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 405711662, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 2121442020, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1054935528, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 42148542, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -174460193, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1076186333, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1347953912, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1386374288, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1993756254, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 666352727, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -307556902, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 67522470, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1298582608, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -57300169, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -923667362, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -514955905, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1674857468, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1250873758, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -418414949, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -336552341, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
   attribute: White
   frameDelay: 0.05

@@ -556,6 +556,7 @@ MonoBehaviour:
   boxSpawned: 0
   itemSorted: 0
   boxLeft: 0
+  gameplayStarted: 0
 --- !u!4 &858193944
 Transform:
   m_ObjectHideFlags: 0

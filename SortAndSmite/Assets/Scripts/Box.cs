@@ -74,7 +74,7 @@ public class Box : MonoBehaviour
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
-            //currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
+            currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
         }
     }
 
@@ -84,7 +84,7 @@ public class Box : MonoBehaviour
         {
             if (currentAnimation != null)
                 StopCoroutine(currentAnimation);
-            //currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
+            currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
         }
     }
 
