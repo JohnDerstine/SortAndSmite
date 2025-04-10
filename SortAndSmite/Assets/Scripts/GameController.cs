@@ -258,6 +258,9 @@ public class GameController : MonoBehaviour
         currentFocus = sr;
         originalOrder = sr.sortingOrder;
         sr.sortingOrder = 10;
+        var childeren = sr.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        if (childeren.Length >= 2)
+            childeren[1].sortingOrder = 10;
         tint.sortingOrder = 9;
     }
 
@@ -268,7 +271,12 @@ public class GameController : MonoBehaviour
     private void ResetObjectOrder()
     {
         if (currentFocus != null)
+        {
             currentFocus.sortingOrder = originalOrder;
+            var childeren = currentFocus.gameObject.GetComponentsInChildren<SpriteRenderer>();
+            if (childeren.Length >= 2)
+                childeren[1].sortingOrder = originalOrder;
+        }
         tint.sortingOrder = tintOrder;
     }
 

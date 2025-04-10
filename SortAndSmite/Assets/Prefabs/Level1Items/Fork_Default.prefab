@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 99b72219d973c1443bb3ef2631b57c88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3350204df5fea4743b263e6e2e9316fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,6 +102,11 @@ MonoBehaviour:
   attributes:
   - Fork
   - Utensil
+  - Red
+  retrieved: 0
+  Released:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &5494989719802266149
 Rigidbody2D:
   serializedVersion: 4

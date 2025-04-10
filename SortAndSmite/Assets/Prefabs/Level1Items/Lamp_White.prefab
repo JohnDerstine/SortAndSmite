@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61b3e5d4e1fdac34db71835542f118f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 69f51b26e76829645877f02133dbe441, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,10 @@ MonoBehaviour:
   - Lamp
   - Furniture
   - White
+  retrieved: 0
+  Released:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &5494989719802266149
 Rigidbody2D:
   serializedVersion: 4
@@ -162,6 +166,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.4, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.8

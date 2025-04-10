@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8a9ab244327f9c841b27ffbed5d16b61, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb579fcfc7c79ba4bb2930f71be815e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,10 @@ MonoBehaviour:
   - Scissors
   - Utensil
   - Black
+  retrieved: 0
+  Released:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &5494989719802266149
 Rigidbody2D:
   serializedVersion: 4
