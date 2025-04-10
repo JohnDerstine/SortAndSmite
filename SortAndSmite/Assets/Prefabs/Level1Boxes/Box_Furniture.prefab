@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 2b2f9e2e355a3f543926b24f66fd78d3, type: 3}
+  m_Sprite: {fileID: 916823843, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,7 +122,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 3.6}
+    oldSize: {x: 6.3999996, y: 3.5999997}
     newSize: {x: 6.4, y: 3.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -143,7 +143,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2653ddb56f0fa41a32039ba3b96b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxOpeningFrames: []
-  boxClosingFrames: []
+  boxOpeningFrames:
+  - {fileID: 916823843, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -1507929750, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -1464564607, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1933845303, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 825682991, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -1078110947, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 2766517, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 2048353657, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -1655349294, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1676008358, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 27272936, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -26312276, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1379957794, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1984301908, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -2083652576, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1210031349, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 1469113409, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 928965262, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -484141705, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -621666651, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: -1212811245, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  - {fileID: 920067267, guid: 59344c4a6f866b642b9df5d7848be341, type: 3}
+  boxClosingFrames:
+  - {fileID: 1881310033, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1224967908, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 689666121, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 112713581, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1312674729, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 108025652, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 405711662, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 2121442020, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1054935528, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 42148542, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -174460193, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1076186333, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1347953912, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1386374288, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1993756254, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 666352727, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -307556902, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 67522470, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -1298582608, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -57300169, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -923667362, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -514955905, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1674857468, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: 1250873758, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -418414949, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
+  - {fileID: -336552341, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
   attribute: Furniture
   frameDelay: 0.05
