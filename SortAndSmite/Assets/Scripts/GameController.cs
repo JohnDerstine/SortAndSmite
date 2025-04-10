@@ -260,7 +260,7 @@ public class GameController : MonoBehaviour
         sr.sortingOrder = 10;
         var childeren = sr.gameObject.GetComponentsInChildren<SpriteRenderer>();
         if (childeren.Length >= 2)
-            childeren[1].sortingOrder = 10;
+            childeren[1].sortingOrder = 11;
         tint.sortingOrder = 9;
     }
 
@@ -275,7 +275,7 @@ public class GameController : MonoBehaviour
             currentFocus.sortingOrder = originalOrder;
             var childeren = currentFocus.gameObject.GetComponentsInChildren<SpriteRenderer>();
             if (childeren.Length >= 2)
-                childeren[1].sortingOrder = originalOrder;
+                childeren[1].sortingOrder = originalOrder + 1;
         }
         tint.sortingOrder = tintOrder;
     }

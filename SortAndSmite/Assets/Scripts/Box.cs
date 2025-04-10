@@ -60,6 +60,10 @@ public class Box : MonoBehaviour
             controller.itemSorted = true;
             controller.gameplayStarted = true;
         }
+
+        if (currentAnimation != null)
+            StopCoroutine(currentAnimation);
+        currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
     }
 
     //Empty the box to cause damage to the boss
