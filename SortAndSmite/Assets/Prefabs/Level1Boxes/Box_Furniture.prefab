@@ -280,3 +280,4 @@ MonoBehaviour:
   - {fileID: -336552341, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
   attribute: Furniture
   frameDelay: 0.05
+  animationSpeedMultiplier: 1.5

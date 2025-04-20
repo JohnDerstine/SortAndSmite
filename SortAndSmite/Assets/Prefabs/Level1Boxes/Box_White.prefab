@@ -196,6 +196,7 @@ MonoBehaviour:
   - {fileID: -336552341, guid: d67d61bd04d7cf142ae1d035b23a492d, type: 3}
   attribute: White
   frameDelay: 0.05
+  animationSpeedMultiplier: 1.5
 --- !u!1 &5757377602825469157
 GameObject:
   m_ObjectHideFlags: 0

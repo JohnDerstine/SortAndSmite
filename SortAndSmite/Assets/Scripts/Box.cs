@@ -15,6 +15,11 @@ public class Box : MonoBehaviour
     public Sprite[] boxOpeningFrames;
     public Sprite[] boxClosingFrames;
     private Coroutine currentAnimation;
+    private bool hasPlayedEnterAnimation = false;
+    private bool hasPlayedExitAnimation = false;
+    private bool isVisibleToCamera = false;
+    private float animationStartPause = 1.5f;
+    private float animationEndPause = 1.5f;
 
     //fields
     private int itemsSorted = 0;
@@ -22,6 +27,8 @@ public class Box : MonoBehaviour
     private string attribute;
     [SerializeField] 
     private float frameDelay = 0.05f;
+    [SerializeField, Range(0.1f, 5f)]
+    private float animationSpeedMultiplier = 1.5f;
 
     void Start()
     {
@@ -30,6 +37,37 @@ public class Box : MonoBehaviour
         patience = GameObject.Find("UIDocument").GetComponent<PatienceBar>();
         boss = GameObject.Find("Boss").GetComponent<Boss>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+        bool currentlyVisible = viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1 && viewportPos.z > 0;
+
+        if (currentlyVisible && !isVisibleToCamera)
+        {
+            isVisibleToCamera = true;
+            if (!hasPlayedEnterAnimation)
+            {
+                hasPlayedEnterAnimation = true;
+                hasPlayedExitAnimation = false;
+                if (currentAnimation != null)
+                    StopCoroutine(currentAnimation);
+                currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
+            }
+        }
+        else if (!currentlyVisible && isVisibleToCamera)
+        {
+            isVisibleToCamera = false;
+            if (!hasPlayedExitAnimation)
+            {
+                hasPlayedExitAnimation = true;
+                hasPlayedEnterAnimation = false;
+                if (currentAnimation != null)
+                    StopCoroutine(currentAnimation);
+                currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
+            }
+        }
     }
 
     //Check the player held item, and recently thrown items for collisions
@@ -61,9 +99,9 @@ public class Box : MonoBehaviour
             controller.gameplayStarted = true;
         }
 
-        if (currentAnimation != null)
-            StopCoroutine(currentAnimation);
-        currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
+        //if (currentAnimation != null)
+        //    StopCoroutine(currentAnimation);
+        //currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
     }
 
     //Empty the box to cause damage to the boss
@@ -72,33 +110,36 @@ public class Box : MonoBehaviour
         boss.TakeDamage(itemsSorted * 5f);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
-        {
-            if (currentAnimation != null)
-                StopCoroutine(currentAnimation);
-            currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
+    //    {
+    //        if (currentAnimation != null)
+    //            StopCoroutine(currentAnimation);
+    //        currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
-        {
-            if (currentAnimation != null)
-                StopCoroutine(currentAnimation);
-            currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D other)
+    //{
+    //    if (other.GetComponent<SortableItem>() != null && other.GetComponent<SortableItem>() == player.HeldItem)
+    //    {
+    //        if (currentAnimation != null)
+    //            StopCoroutine(currentAnimation);
+    //        currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
+    //    }
+    //}
 
     private IEnumerator PlayAnimation(Sprite[] frames)
     {
         Debug.Log("Playing animation");
+        float delay = frameDelay / animationSpeedMultiplier;
+        yield return new WaitForSeconds(animationStartPause);
         for (int i = 0; i < frames.Length; i++)
         {
             spriteRenderer.sprite = frames[i];
-            yield return new WaitForSeconds(frameDelay);
+            yield return new WaitForSeconds(delay);
         }
+        yield return new WaitForSeconds(animationEndPause);
     }
 }
