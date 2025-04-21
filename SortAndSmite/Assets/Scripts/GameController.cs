@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private VisualTreeAsset popup;
     [SerializeField]
+    private VisualTreeAsset pause;
+    [SerializeField]
     private Boss boss;
     [SerializeField]
     private Conveyor conveyor;
@@ -67,6 +69,8 @@ public class GameController : MonoBehaviour
     private bool step9;
     private TemplateContainer popUpElement;
     public bool gameplayStarted = false;
+    public bool tutorialOver = true;
+    private TemplateContainer pauseElement;
 
     private string step1Text = "This is your landlord, who is trying to evict you! You've made your payments on time and have been nothing but respectful!";
     private string step2Text = "This is his health bar. If you want to live in peace, you'll have to completely drain his health bar.";
@@ -92,11 +96,32 @@ public class GameController : MonoBehaviour
             {
                 foreach (GameObject item in boss.activeItems)
                     item.GetComponent<SortableItem>().SetItemBody(RigidbodyType2D.Static);
+
+                if (tutorialOver)
+                {
+                    SendAllToBack();
+                    TintEverything();
+                    pauseElement = pause.Instantiate();
+                    pauseElement.style.position = Position.Absolute;
+                    pauseElement.Q<Button>("ResumeButton").clicked += TogglePause;
+                    root.Add(pauseElement);
+                }
             }
             else if (CurrentState == GameState.Running)
             {
                 foreach (GameObject item in boss.activeItems)
                     item.GetComponent<SortableItem>().SetItemBody(RigidbodyType2D.Dynamic);
+
+                if (tutorialOver)
+                {
+                    BringAllToFront();
+                    ResetObjectOrder();
+                    if (pauseElement != null)
+                    {
+                        root.Remove(pauseElement);
+                        pauseElement = null;
+                    }
+                }
             }
             else if (CurrentState == GameState.Victory)
             {
@@ -130,6 +155,8 @@ public class GameController : MonoBehaviour
     void Update()
     {
         //Might check for certain conditions to change state here
+        if (Input.GetKeyDown(KeyCode.Escape) && tutorialOver)
+            TogglePause();
     }
 
     public void TogglePause()
@@ -157,6 +184,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator StartTutorial()
     {
+        tutorialOver = false;
+
         SendAllToBack();
         AddPopup(Screen.width / 2f, Screen.height / 2, step1Text);
         BringToFrontObject(GameObject.Find("Boss").GetComponentInChildren<SpriteRenderer>());
@@ -251,6 +280,8 @@ public class GameController : MonoBehaviour
 
         ResetObjectOrder();
         BringAllToFront();
+
+        tutorialOver = true;
     }
 
     private void BringToFrontObject(SpriteRenderer sr)

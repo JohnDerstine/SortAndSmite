@@ -547,6 +547,7 @@ MonoBehaviour:
   mainDocument: {fileID: 2129374890}
   startDocument: {fileID: 90641345}
   popup: {fileID: 9197481963319205126, guid: da6f33707666d4b4ea15fd6450be43be, type: 3}
+  pause: {fileID: 9197481963319205126, guid: b39b81daebd49aa40935ce49109ef3ab, type: 3}
   boss: {fileID: 433329893}
   conveyor: {fileID: 1075487338}
   victoryText: {fileID: 861944997}
@@ -557,6 +558,7 @@ MonoBehaviour:
   itemSorted: 0
   boxLeft: 0
   gameplayStarted: 0
+  tutorialOver: 1
 --- !u!4 &858193944
 Transform:
   m_ObjectHideFlags: 0
