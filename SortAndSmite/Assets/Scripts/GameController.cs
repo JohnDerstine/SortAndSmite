@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 //Different game states (We might not need all of these)
 public enum GameState { 
@@ -104,6 +105,7 @@ public class GameController : MonoBehaviour
                     pauseElement = pause.Instantiate();
                     pauseElement.style.position = Position.Absolute;
                     pauseElement.Q<Button>("ResumeButton").clicked += TogglePause;
+                    pauseElement.Q<Button>("RestartButton").clicked += RestartGame;
                     root.Add(pauseElement);
                 }
             }
@@ -173,6 +175,7 @@ public class GameController : MonoBehaviour
         startDocument.enabled = false;
         if (tutorialEnabled)
         {
+            tutorialOver = false;
             CurrentState = GameState.Paused;
             StartCoroutine(StartTutorial());
         }
@@ -180,11 +183,15 @@ public class GameController : MonoBehaviour
             CurrentState = GameState.Running;
     }
 
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     #region Tutorial
 
     private IEnumerator StartTutorial()
     {
-        tutorialOver = false;
 
         SendAllToBack();
         AddPopup(Screen.width / 2f, Screen.height / 2, step1Text);
