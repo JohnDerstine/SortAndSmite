@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
 
     //Fields
     private GameState currentState;
-    private Button start;
+    private VisualElement start;
     public bool tutorialEnabled;
     private SpriteRenderer currentFocus;
     private int originalOrder;
@@ -141,8 +141,8 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         CurrentState = GameState.Menu;
-        start = startDocument.rootVisualElement.Q<Button>("SortButton");
-        start.clickable = new Clickable(e => startGame());
+        start = startDocument.rootVisualElement.Q<VisualElement>("SortButton");
+        start.AddManipulator(new Clickable(e => startGame()));
         root = mainDocument.rootVisualElement;
 
         holdTint = root.Q("HoldTint");
