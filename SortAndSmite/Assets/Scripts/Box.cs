@@ -21,6 +21,8 @@ public class Box : MonoBehaviour
     private float animationStartPause = 1.5f;
     private float animationEndPause = 1.5f;
 
+    private bool open;
+
     //fields
     private int itemsSorted = 0;
     [SerializeField]
@@ -42,7 +44,7 @@ public class Box : MonoBehaviour
     private void Update()
     {
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        bool currentlyVisible = viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1 && viewportPos.z > 0;
+        bool currentlyVisible = viewportPos.x > -.2f && viewportPos.x < 1.2f && viewportPos.y > 0 && viewportPos.y < 1 && viewportPos.z > 0;
 
         if (currentlyVisible && !isVisibleToCamera)
         {
@@ -76,6 +78,9 @@ public class Box : MonoBehaviour
         Debug.Log("tried");
 
         if (controller.CurrentState == GameState.Paused && (controller.itemSorted || !controller.tutorialEnabled))
+            return;
+
+        if (!open)
             return;
 
         if (item.Attributes.Contains(attribute))
@@ -132,6 +137,7 @@ public class Box : MonoBehaviour
 
     private IEnumerator PlayAnimation(Sprite[] frames)
     {
+        open = !open;
         Debug.Log("Playing animation");
         float delay = frameDelay / animationSpeedMultiplier;
         yield return new WaitForSeconds(animationStartPause);
