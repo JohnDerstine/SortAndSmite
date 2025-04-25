@@ -237,6 +237,8 @@ public class GameController : MonoBehaviour
         Debug.Log("Item time 2");
         yield return new WaitWhile(() => !step42);
 
+        gameplayStarted = true;
+
         ResetObjectOrder();
         SendAllToBack();
         Debug.Log("Waiting for item to be sorted");

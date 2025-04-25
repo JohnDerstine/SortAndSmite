@@ -18,7 +18,7 @@ public class Box : MonoBehaviour
     private bool hasPlayedEnterAnimation = false;
     private bool hasPlayedExitAnimation = false;
     private bool isVisibleToCamera = false;
-    private float animationStartPause = 1.5f;
+    private float animationStartPause;
     private float animationEndPause = 1.5f;
 
     private bool open;
@@ -44,7 +44,7 @@ public class Box : MonoBehaviour
     private void Update()
     {
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        bool currentlyVisible = viewportPos.x > -.2f && viewportPos.x < 1.2f && viewportPos.y > 0 && viewportPos.y < 1 && viewportPos.z > 0;
+        bool currentlyVisible = viewportPos.x > -.2f && viewportPos.x < 0.95f && viewportPos.y > 0 && viewportPos.y < 1 && viewportPos.z > 0;
 
         if (currentlyVisible && !isVisibleToCamera)
         {
@@ -55,19 +55,21 @@ public class Box : MonoBehaviour
                 hasPlayedExitAnimation = false;
                 if (currentAnimation != null)
                     StopCoroutine(currentAnimation);
-                currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames));
+                currentAnimation = StartCoroutine(PlayAnimation(boxOpeningFrames, 1.5f));
             }
         }
         else if (!currentlyVisible && isVisibleToCamera)
         {
+            Debug.Log("Leaving");
             isVisibleToCamera = false;
             if (!hasPlayedExitAnimation)
             {
+                Debug.Log("Playing leave animation");
                 hasPlayedExitAnimation = true;
                 hasPlayedEnterAnimation = false;
                 if (currentAnimation != null)
                     StopCoroutine(currentAnimation);
-                currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames));
+                currentAnimation = StartCoroutine(PlayAnimation(boxClosingFrames, 0f));
             }
         }
     }
@@ -101,7 +103,6 @@ public class Box : MonoBehaviour
         if (!controller.itemSorted)
         {
             controller.itemSorted = true;
-            controller.gameplayStarted = true;
         }
 
         //if (currentAnimation != null)
@@ -135,12 +136,12 @@ public class Box : MonoBehaviour
     //    }
     //}
 
-    private IEnumerator PlayAnimation(Sprite[] frames)
+    private IEnumerator PlayAnimation(Sprite[] frames, float startPause)
     {
         open = !open;
         Debug.Log("Playing animation");
         float delay = frameDelay / animationSpeedMultiplier;
-        yield return new WaitForSeconds(animationStartPause);
+        yield return new WaitForSeconds(startPause);
         for (int i = 0; i < frames.Length; i++)
         {
             spriteRenderer.sprite = frames[i];
